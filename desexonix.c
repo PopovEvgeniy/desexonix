@@ -23,6 +23,7 @@ unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length);
 tga_head prepare_head();
 void convert_palette(unsigned char *palette);
+unsigned char correct_level(const unsigned char level);
 void correct_colors(unsigned char *palette);
 void write_head(FILE *output,tga_head target);
 void read_data(FILE *input,unsigned char *buffer,const size_t length);
@@ -70,7 +71,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.4.7");
+ puts("Desexonix. Version 0.4.9");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020 year");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code is based on XXX Games tools sources by CTPAX-X team");
@@ -236,25 +237,44 @@ tga_head prepare_head()
 void convert_palette(unsigned char *palette)
 {
  size_t index;
- unsigned char red,green,blue;
+ unsigned char red,blue;
  for (index=0;index<PALETTE_LENGTH;index+=3)
  {
   red=palette[index];
-  green=palette[index+1];
   blue=palette[index+2];
   palette[index]=blue;
-  palette[index+1]=green;
   palette[index+2]=red;
  }
 
 }
 
+unsigned char correct_level(const unsigned char level)
+{
+ unsigned char result;
+ result=level*4;
+ if (level==63)
+ {
+  result+=3;
+ }
+ if ((level>20)&&(level<42))
+ {
+  ++result;
+ }
+ if ((level>41)&&(level<63))
+ {
+  result+=2;
+ }
+ return result;
+}
+
 void correct_colors(unsigned char *palette)
 {
  size_t index;
+ unsigned char level;
  for (index=0;index<PALETTE_LENGTH;++index)
  {
-  palette[index]*=4;
+  level=correct_level(palette[index]);
+  palette[index]=level;
  }
 
 }
