@@ -23,7 +23,7 @@ unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length);
 tga_head prepare_head();
 void convert_palette(unsigned char *palette);
-unsigned char correct_level(const unsigned char level);
+unsigned char correct_level(const unsigned short int level);
 void correct_colors(unsigned char *palette);
 void write_head(FILE *output,tga_head target);
 void read_data(FILE *input,unsigned char *buffer,const size_t length);
@@ -71,7 +71,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.4.9");
+ puts("Desexonix. Version 0.5.1");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020 year");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code is based on XXX Games tools sources by CTPAX-X team");
@@ -248,22 +248,10 @@ void convert_palette(unsigned char *palette)
 
 }
 
-unsigned char correct_level(const unsigned char level)
+unsigned char correct_level(const unsigned short int level)
 {
- unsigned char result;
- result=level*4;
- if (level==63)
- {
-  result+=3;
- }
- if ((level>20)&&(level<42))
- {
-  ++result;
- }
- if ((level>41)&&(level<63))
- {
-  result+=2;
- }
+ unsigned short int result;
+ result=(level*255)/63;
  return result;
 }
 
