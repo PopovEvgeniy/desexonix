@@ -26,8 +26,6 @@ void convert_palette(unsigned char *palette);
 unsigned char correct_level(const unsigned short int level);
 void correct_colors(unsigned char *palette);
 void write_head(FILE *output,tga_head target);
-void read_data(FILE *input,unsigned char *buffer,const size_t length);
-void write_data(FILE *output,unsigned char *buffer,const size_t length);
 void work(const char *target);
 
 int main(int argc, char *argv[])
@@ -71,7 +69,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.5.1");
+ puts("Desexonix. Version 0.5.2");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020 year");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code is based on XXX Games tools sources by CTPAX-X team");
@@ -272,16 +270,6 @@ void write_head(FILE *output,tga_head target)
  fwrite(&target,TGA_HEAD_LENGTH,sizeof(unsigned char),output);
 }
 
-void read_data(FILE *input,unsigned char *buffer,const size_t length)
-{
- fread(buffer,sizeof(unsigned char),length,input);
-}
-
-void write_data(FILE *output,unsigned char *buffer,const size_t length)
-{
- fwrite(buffer,sizeof(unsigned char),length,output);
-}
-
 void work(const char *target)
 {
  unsigned long int index,amount;
@@ -303,15 +291,15 @@ void work(const char *target)
   show_progress(index,amount);
   name=get_name(index+1,short_name,".tga");
   output=create_output_file(name);
-  read_data(input,palette,PALETTE_LENGTH);
-  read_data(input,data,IMAGE_LENGTH);
+  fread(palette,sizeof(unsigned char),PALETTE_LENGTH,input);
+  fread(data,sizeof(unsigned char),IMAGE_LENGTH,input);
   decrypt_data(palette,PALETTE_LENGTH);
   decrypt_data(data,IMAGE_LENGTH);
   convert_palette(palette);
   correct_colors(palette);
   write_head(output,image_head);
-  write_data(output,palette,PALETTE_LENGTH);
-  write_data(output,data,IMAGE_LENGTH);
+  fwrite(palette,sizeof(unsigned char),PALETTE_LENGTH,output);
+  fwrite(data,sizeof(unsigned char),IMAGE_LENGTH,output);
   free(name);
   fclose(output);
  }
