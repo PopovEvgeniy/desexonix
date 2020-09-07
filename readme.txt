@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.5.2
+                             Version 0.5.3
 
 System requirement
 
@@ -60,4 +60,4 @@ Version history
 0.4.3 - Small bug was fixed.
 0.4.4 - Small changes.
 0.4.5 - Small bug was fixed.
-0.4.6 - 0.5.2 - Small changes.
+0.4.6 - 0.5.3 - Small changes.
