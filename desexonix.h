@@ -5,7 +5,7 @@
 
 /*
 This code is based on XXX Games tools sources by CTPAX-X team(http://www.ctpax-x.org/?goto=files&show=21).
-It relicensed with permission from the author.
+It re-licensed with permission from the author.
 */
 
 #pragma pack(push, 1)
