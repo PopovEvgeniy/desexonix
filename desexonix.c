@@ -55,10 +55,10 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.5.4");
+ puts("Desexonix. Version 0.5.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2022 years");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
- puts("Some code is based on XXX Games tools sources by CTPAX-X team");
+ puts("Some code taken from XXX Games tools by CTPAX-X team");
  puts("It re-licensed with permission from the author");
 }
 
@@ -74,8 +74,7 @@ FILE *open_input_file(const char *name)
  target=fopen(name,"rb");
  if (target==NULL)
  {
-  putchar('\n');
-  puts("Can't open input file");
+  show_message("Can't open input file");
   exit(1);
  }
  return target;
@@ -87,8 +86,7 @@ FILE *create_output_file(const char *name)
  target=fopen(name,"wb");
  if (target==NULL)
  {
-  putchar('\n');
-  puts("Can't create ouput file");
+  show_message("Can't create ouput file");
   exit(2);
  }
  return target;
@@ -109,8 +107,7 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
-  putchar('\n');
-  puts("Invalid target file size");
+  show_message("Invalid target file size");
   exit(3);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);
@@ -120,8 +117,7 @@ void check_memory(const void *memory)
 {
  if(memory==NULL)
  {
-  putchar('\n');
-  puts("Can't allocate memory");
+  show_message("Can't allocate memory");
   exit(4);
  }
 

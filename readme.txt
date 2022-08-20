@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.5.4
+                             Version 0.5.5
 
 System requirement
 
@@ -24,11 +24,12 @@ Exit codes
 0 - Operation successfully complete.
 1 - Can't open input file.
 2 - Can't create output file.
+3 - Invalid target file size.
 4 - Can't allocate memory.
 
 Third-party code
 
-Some code based on XXX Games tools sources by CTPAX-X team(http://www.ctpax-x.org/?goto=files&show=21).
+Some code taken from XXX Games tools by CTPAX-X team(http://www.ctpax-x.org/?goto=files&show=21).
 It re-licensed with permission from the author.
 
 Source code
@@ -62,4 +63,4 @@ Version history
 0.4.5 - Small bug fixed.
 0.4.6 - 0.5.3 - Small changes.
 0.5.3.1 - 0.5.3.2 - Makefile updated.
-0.5.4 - Small changes.
+0.5.4 - 0.5.5 - Small changes.
