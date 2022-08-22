@@ -55,7 +55,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.5.5");
+ puts("Desexonix. Version 0.5.6");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2022 years");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code taken from XXX Games tools by CTPAX-X team");
@@ -74,7 +74,7 @@ FILE *open_input_file(const char *name)
  target=fopen(name,"rb");
  if (target==NULL)
  {
-  show_message("Can't open input file");
+  puts("Can't open input file");
   exit(1);
  }
  return target;
@@ -107,7 +107,7 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
-  show_message("Invalid target file size");
+  puts("Invalid target file size");
   exit(3);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);
