@@ -23,7 +23,6 @@ tga_head prepare_head();
 void convert_palette(unsigned char *palette);
 unsigned char correct_level(const unsigned short int level);
 void correct_colors(unsigned char *palette);
-void write_head(FILE *output,tga_head *target);
 void work(const char *target);
 
 int main(int argc, char *argv[])
@@ -45,8 +44,7 @@ int main(int argc, char *argv[])
 void show_progress(const unsigned long int start,const unsigned long int stop)
 {
  unsigned long int progress;
- progress=start+1;
- progress*=100;
+ progress=(start+1)*100;
  progress/=stop;
  putchar('\r');
  printf("Amount of extracted files: %lu from %lu.Progress:%lu%%",start+1,stop,progress);
@@ -55,8 +53,8 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.5.6");
- puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2022 years");
+ puts("Desexonix. Version 0.5.8");
+ puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2023 years");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code taken from XXX Games tools by CTPAX-X team");
  puts("It re-licensed with permission from the author");
@@ -74,7 +72,7 @@ FILE *open_input_file(const char *name)
  target=fopen(name,"rb");
  if (target==NULL)
  {
-  puts("Can't open input file");
+  show_message("Can't open input file");
   exit(1);
  }
  return target;
@@ -107,7 +105,7 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
-  puts("Invalid target file size");
+  show_message("Invalid target file size");
   exit(3);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);
@@ -247,11 +245,6 @@ void correct_colors(unsigned char *palette)
 
 }
 
-void write_head(FILE *output,tga_head *target)
-{
- fwrite(target,TGA_HEAD_LENGTH,sizeof(unsigned char),output);
-}
-
 void work(const char *target)
 {
  unsigned long int index,amount;
@@ -279,7 +272,7 @@ void work(const char *target)
   decrypt_data(data,IMAGE_LENGTH);
   convert_palette(palette);
   correct_colors(palette);
-  write_head(output,&image_head);
+  fwrite(&image_head,sizeof(tga_head),sizeof(unsigned char),output);
   fwrite(palette,sizeof(unsigned char),PALETTE_LENGTH,output);
   fwrite(data,sizeof(unsigned char),IMAGE_LENGTH,output);
   free(name);

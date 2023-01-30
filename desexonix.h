@@ -1,6 +1,5 @@
 #define IMAGE_LENGTH 64000
 #define PALETTE_LENGTH 768
-#define TGA_HEAD_LENGTH 18
 #define TOP_LEFT 0x20
 
 /*
