@@ -13,7 +13,6 @@ unsigned long int get_file_size(FILE *file);
 unsigned long int check_file_size(FILE *target);
 void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
-unsigned char *get_memory(const size_t length);
 size_t get_extension_position(const char *source);
 char *get_short_name(const char *name);
 char *get_name(const unsigned long int index,const char *short_name,const char *extension);
@@ -53,7 +52,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.5.9");
+ puts("Desexonix. Version 0.6.1");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2023 years");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code taken from XXX Games tools by CTPAX-X team");
@@ -129,14 +128,6 @@ char *get_string_memory(const size_t length)
  return memory;
 }
 
-unsigned char *get_memory(const size_t length)
-{
- unsigned char *memory=NULL;
- memory=(unsigned char*)calloc(length,sizeof(unsigned char));
- check_memory(memory);
- return memory;
-}
-
 size_t get_extension_position(const char *source)
 {
  size_t index;
@@ -174,8 +165,8 @@ char *get_name(const unsigned long int index,const char *short_name,const char *
 
 unsigned char *create_buffer(const size_t length)
 {
- unsigned char *buffer;
- buffer=(unsigned char *)calloc(length,sizeof(unsigned char));
+ unsigned char *buffer=NULL;
+ buffer=(unsigned char *)malloc(length*sizeof(unsigned char));
  check_memory(buffer);
  return buffer;
 }
