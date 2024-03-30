@@ -2,11 +2,11 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.1
+                             Version 0.6.2
 
 System requirement
 
-52 kilobytes free space on storage media.
+70 kilobytes free space on storage media.
 100 kilobytes of free RAM.
 
 Description and usage
@@ -65,4 +65,4 @@ Version history
 0.5.3.1 - 0.5.3.2 - Makefile updated.
 0.5.4 - 0.5.9 - Small changes.
 0.6 - Unused code removed.
-0.6.1 - Small changes.
+0.6.1 - 0.6.2 - Small changes.
