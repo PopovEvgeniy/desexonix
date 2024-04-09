@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.2
+                             Version 0.6.3
 
 System requirement
 
@@ -34,9 +34,9 @@ It re-licensed with permission from the author.
 
 Source code
 
-The program source code compiled under Open Watcom.
-But you can do it under any modern C compiler.
-Source code can be compiled for wide range operating systems, but you need to create makefile or build script by yourself.
+The source code compiled under Open Watcom.
+But you can compile it under any modern C compiler.
+Source code can be compiled for wide range of operating systems, but you need to create makefile or build script by yourself.
 I provide only two things: compiled the binary file for Windows and makefile for Linux.
 
 Install and uninstall under Linux
@@ -66,3 +66,4 @@ Version history
 0.5.4 - 0.5.9 - Small changes.
 0.6 - Unused code removed.
 0.6.1 - 0.6.2 - Small changes.
+0.6.3 - Visual C++ support improved.

@@ -1,7 +1,3 @@
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "desexonix.h"
 
 void show_intro();
@@ -52,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.6.2");
+ puts("Desexonix. Version 0.6.3");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2024 years");
  puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code taken from XXX Games tools by CTPAX-X team");

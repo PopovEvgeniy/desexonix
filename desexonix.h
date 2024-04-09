@@ -1,3 +1,12 @@
+#if defined _MSC_VER && _MSC_VER>=1400
+  #pragma warning(disable : 4996)
+#endif
+
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define IMAGE_LENGTH 64000
 #define PALETTE_LENGTH 768
 #define TOP_LEFT 0x20
