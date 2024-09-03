@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.3.1
+                             Version 0.6.3.2
 
 System requirement
 
@@ -17,7 +17,7 @@ This program takes a target file name as a command-line argument.
 
 License
 
-This program distributed under GNU GENERAL PUBLIC LICENSE.
+This program is distributed under GNU GENERAL PUBLIC LICENSE.
 
 Exit codes
 
@@ -29,12 +29,12 @@ Exit codes
 
 Third—party code
 
-Some code was taken from XXX Games tools by the CTPAX—X team (http://www.ctpax—x.org/?goto=files&show=21).
+Some code was taken from XXX Games tools by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
 It was re-licensed with permission from the author.
 
 Source code
 
-The code compiled under Open Watcom.
+The code was compiled under Open Watcom.
 You can compile it with any modern C compiler.
 Source code can be compiled for a wide range of operating systems, but you need to create a makefile or build a script by yourself.
 I provide only two things: the binary file for Windows and the makefile for Linux.
@@ -44,10 +44,10 @@ Install and uninstall under Linux
 Follow these steps:
 
 1. Extract the content of the source code archive.
-2. Open a terminal and go to source code directory.
+2. Open a terminal and go to the source code directory.
 3.
-Run as root for install: make install
-Run as root for uninstall: make uninstall
+Run as root to install: make install
+Run as root to uninstall: make uninstall
 
 Contact
 
@@ -67,4 +67,4 @@ Version history
 0.6 — Unused code removed.
 0.6.1 — 0.6.2 — Small changes.
 0.6.3 — Visual C++ support improved.
-0.6.3.1 — Documentation updated.
+0.6.3.1 — 0.6.3.2 — Documentation updated.
