@@ -25,13 +25,13 @@ int main(int argc, char *argv[])
  show_intro();
  if (argc<2)
  {
-  show_message("You must give a target file name as command line argument!");
+  show_message("You must give a target file name as the command-line argument!");
  }
  else
  {
   show_message("Extracting a graphics... Please wait");
   work(argv[1]);
-  show_message("Work finish");
+  show_message("The work has been finished");
  }
  return 0;
 }
@@ -42,17 +42,17 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
  progress=(start+1)*100;
  progress/=stop;
  putchar('\r');
- printf("Amount of extracted files: %lu from %lu.Progress:%lu%%",start+1,stop,progress);
+ printf("Amount of the extracted files: %lu from %lu.Progress:%lu%%",start+1,stop,progress);
 }
 
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.6.3");
+ puts("Desexonix. Version 0.6.4");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2024 years");
- puts("This program distributed under GNU GENERAL PUBLIC LICENSE");
- puts("Some code taken from XXX Games tools by CTPAX-X team");
- puts("It re-licensed with permission from the author");
+ puts("This program is distributed under GNU GENERAL PUBLIC LICENSE");
+ puts("Some code was taken from XXX Games tools by the CTPAX-X team");
+ puts("It was relicensed with permission from the author");
 }
 
 void show_message(const char *message)
@@ -67,7 +67,7 @@ FILE *open_input_file(const char *name)
  target=fopen(name,"rb");
  if (target==NULL)
  {
-  puts("Can't open input file");
+  puts("Can't open the input file");
   exit(1);
  }
  return target;
@@ -79,7 +79,7 @@ FILE *create_output_file(const char *name)
  target=fopen(name,"wb");
  if (target==NULL)
  {
-  show_message("Can't create ouput file");
+  show_message("Can't create the ouput file");
   exit(2);
  }
  return target;
@@ -100,7 +100,7 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
-  puts("Invalid target file size");
+  puts("Invalid length of the target file");
   exit(3);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);

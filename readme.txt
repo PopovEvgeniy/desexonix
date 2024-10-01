@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.3.2
+                             Version 0.6.4
 
 System requirement
 
@@ -13,7 +13,7 @@ Description and usage
 
 This program lets you extract images from the Sexonix game. It is stored in the Sexonix.pic file.
 Extracted images will be saved in Truevision TGA format (256 colors with an indexed palette).
-This program takes a target file name as a command-line argument.
+This program takes a target file name as the command-line argument.
 
 License
 
@@ -21,22 +21,22 @@ This program is distributed under GNU GENERAL PUBLIC LICENSE.
 
 Exit codes
 
-0 — Operation successfully completed.
-1 — Can't open input file.
-2 — Can't create output file.
-3 — Invalid target file size.
+0 — Operation was successfully completed.
+1 — Can't open the input file.
+2 — Can't create the output file.
+3 — Invalid length of the target file.
 4 — Can't allocate memory.
 
 Third—party code
 
 Some code was taken from XXX Games tools by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
-It was re-licensed with permission from the author.
+It was relicensed with permission from the author.
 
 Source code
 
 The code was compiled under Open Watcom.
 You can compile it with any modern C compiler.
-Source code can be compiled for a wide range of operating systems, but you need to create a makefile or build a script by yourself.
+The source code can be compiled for a wide range of operating systems, but you need to create a makefile or a build script by yourself.
 I provide only two things: the binary file for Windows and the makefile for Linux.
 
 Install and uninstall under Linux
@@ -51,7 +51,7 @@ Run as root to uninstall: make uninstall
 
 Contact
 
-You can send me a letter to tuzik87@inbox.ru.
+You can send me a letter at tuzik87@inbox.ru.
 
 Version history
 
@@ -68,3 +68,4 @@ Version history
 0.6.1 — 0.6.2 — Small changes.
 0.6.3 — Visual C++ support improved.
 0.6.3.1 — 0.6.3.2 — Documentation updated.
+0.6.4 — Small changes.
