@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.4
+                             Version 0.6.4.1
 
 System requirement
 
@@ -11,8 +11,8 @@ System requirement
 
 Description and usage
 
-This program lets you extract images from the Sexonix game. It is stored in the Sexonix.pic file.
-Extracted images will be saved in Truevision TGA format (256 colors with an indexed palette).
+This program lets you extract the images from the Sexonix game. It is stored in the Sexonix.pic file.
+The extracted images will be saved in Truevision TGA format (256 colors with an indexed palette).
 This program takes a target file name as the command-line argument.
 
 License
@@ -21,13 +21,13 @@ This program is distributed under GNU GENERAL PUBLIC LICENSE.
 
 Exit codes
 
-0 — Operation was successfully completed.
-1 — Can't open the input file.
-2 — Can't create the output file.
-3 — Invalid length of the target file.
-4 — Can't allocate memory.
+0: Operation was successfully completed.
+1: Can't open the input file.
+2: Can't create the output file.
+3: Invalid length of the target file.
+4: Can't allocate memory.
 
-Third—party code
+Third�party code
 
 Some code was taken from XXX Games tools by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
 It was relicensed with permission from the author.
@@ -55,17 +55,18 @@ You can send me a letter at tuzik87@inbox.ru.
 
 Version history
 
-0.1 — Initial version.
-0.2 — Target file size checking added.
-0.3 — 0.4.2 — Small changes.
-0.4.3 — Small bug fixed.
-0.4.4 — Small changes.
-0.4.5 — Small bug fixed.
-0.4.6 — 0.5.3 — Small changes.
-0.5.3.1 — 0.5.3.2 — Makefile updated.
-0.5.4 — 0.5.9 — Small changes.
-0.6 — Unused code removed.
-0.6.1 — 0.6.2 — Small changes.
-0.6.3 — Visual C++ support improved.
-0.6.3.1 — 0.6.3.2 — Documentation updated.
-0.6.4 — Small changes.
+0.1: Initial version.
+0.2: Target file size checking has been added.
+0.3-0.4.2: The small changes.
+0.4.3: A small bug is fixed.
+0.4.4: The small changes.
+0.4.5: A small bug is fixed.
+0.4.6-0.5.3: The small changes.
+0.5.3.1-0.5.3.2: The makefile updated.
+0.5.4-0.5.9: The small changes.
+0.6: The unused code is removed.
+0.6.1-0.6.2: The small changes.
+0.6.3: Visual C++ support improved.
+0.6.3.1-0.6.3.2: Documentation updated.
+0.6.4: The small changes.
+0.6.4.1: Documentation updated.
