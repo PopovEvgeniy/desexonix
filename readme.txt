@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.4.1
+                             Version 0.6.4.2
 
 System requirement
 
@@ -56,17 +56,17 @@ You can send me a letter at tuzik87@inbox.ru.
 Version history
 
 0.1: Initial version.
-0.2: Target file size checking has been added.
+0.2: The target file size checking has been added.
 0.3-0.4.2: The small changes.
-0.4.3: A small bug is fixed.
+0.4.3: A small bug has been fixed.
 0.4.4: The small changes.
-0.4.5: A small bug is fixed.
+0.4.5: A small bug has been fixed.
 0.4.6-0.5.3: The small changes.
-0.5.3.1-0.5.3.2: The makefile updated.
+0.5.3.1-0.5.3.2: The makefile has been updated.
 0.5.4-0.5.9: The small changes.
-0.6: The unused code is removed.
+0.6: The unused code has been removed.
 0.6.1-0.6.2: The small changes.
-0.6.3: Visual C++ support improved.
-0.6.3.1-0.6.3.2: Documentation updated.
+0.6.3: Visual C++ support has improved.
+0.6.3.1-0.6.3.2: The documentation has been updated.
 0.6.4: The small changes.
-0.6.4.1: Documentation updated.
+0.6.4.1-0.6.4.2: The documentation has been updated.
