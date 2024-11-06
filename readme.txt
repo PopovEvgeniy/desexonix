@@ -2,11 +2,11 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.4.2
+                             Version 0.6.5
 
 System requirement
 
-70 kilobytes of free space on storage media.
+36 kilobytes of free space on storage media.
 100 kilobytes of free RAM.
 
 Description and usage
@@ -34,7 +34,7 @@ It was relicensed with permission from the author.
 
 Source code
 
-The code was compiled under Open Watcom.
+The code was compiled under Tiny C Compiler.
 You can compile it with any modern C compiler.
 The source code can be compiled for a wide range of operating systems, but you need to create a makefile or a build script by yourself.
 I provide only two things: the binary file for Windows and the makefile for Linux.
@@ -70,3 +70,4 @@ Version history
 0.6.3.1-0.6.3.2: The documentation has been updated.
 0.6.4: The small changes.
 0.6.4.1-0.6.4.2: The documentation has been updated.
+0.6.5: The source code was recompiled under Tiny C Compiler.
