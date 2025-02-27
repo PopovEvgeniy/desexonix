@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.5
+                             Version 0.6.5.1
 
 System requirement
 
@@ -71,3 +71,4 @@ Version history
 0.6.4: The small changes.
 0.6.4.1-0.6.4.2: The documentation has been updated.
 0.6.5: The source code was recompiled under Tiny C Compiler.
+0.6.5.1: The makefile has been updated.
