@@ -1,4 +1,5 @@
 #include "desexonix.h"
+#include "format.h"
 
 void show_intro();
 void show_message(const char *message);
@@ -48,8 +49,8 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.6.5");
- puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2024 years");
+ puts("Desexonix. Version 0.6.6");
+ puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2025 years");
  puts("This program is distributed under GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
  puts("It was relicensed with permission from the author");
@@ -180,8 +181,8 @@ void decrypt_data(unsigned char *target,const size_t length)
 tga_head prepare_head()
 {
  /*
- This code is based on XXX Games tools sources by CTPAX-X team(http://www.ctpax-x.org/?goto=files&show=21).
- It re-licensed with permission from the author.
+ This code is based on XXX Games tools sources by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
+ It was relicensed with permission from the author.
  */
  tga_head target;
  target.id=0;
