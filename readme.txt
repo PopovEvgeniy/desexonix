@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich         
 
-                             Version 0.6.6
+                             Version 0.6.6.1
 
 System requirement
 
@@ -17,7 +17,7 @@ This program takes a target file name as the command-line argument.
 
 License
 
-This program is distributed under GNU GENERAL PUBLIC LICENSE.
+This program is distributed under the GNU GENERAL PUBLIC LICENSE.
 
 Exit codes
 
@@ -49,10 +49,6 @@ Follow these steps:
 Run as root to install: make install
 Run as root to uninstall: make uninstall
 
-Contact
-
-You can send me a letter at tuzik87@inbox.ru.
-
 Version history
 
 0.1: Initial version.
@@ -73,3 +69,4 @@ Version history
 0.6.5: The source code was recompiled under Tiny C Compiler.
 0.6.5.1: The makefile has been updated.
 0.6.6: The small changes.
+0.6.6.1: The documentation has been updated.
