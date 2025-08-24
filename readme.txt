@@ -1,12 +1,12 @@
                               Desexonix
 
-                 Sexonix image extractor by Popov Evgeniy Alekseyevich         
+                 Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 0.6.6.1
+                             Version 0.6.7
 
-System requirement
+System requirements
 
-36 kilobytes of free space on storage media.
+68 kilobytes of free space on storage media.
 100 kilobytes of free RAM.
 
 Description and usage
@@ -21,20 +21,20 @@ This program is distributed under the GNU GENERAL PUBLIC LICENSE.
 
 Exit codes
 
-0: Operation was successfully completed.
+0: The operation was successfully completed.
 1: Can't open the input file.
 2: Can't create the output file.
-3: Invalid length of the target file.
+3: The target file length is invalid.
 4: Can't allocate memory.
 
-Third—party code
+Third-party code
 
 Some code was taken from XXX Games tools by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
-It was relicensed with permission from the author.
+It was relicensed with the permission of the author.
 
 Source code
 
-The code was compiled under Tiny C Compiler.
+The code was compiled under Open Watcom.
 You can compile it with any modern C compiler.
 The source code can be compiled for a wide range of operating systems, but you need to create a makefile or a build script by yourself.
 I provide only two things: the binary file for Windows and the makefile for Linux.
@@ -70,3 +70,4 @@ Version history
 0.6.5.1: The makefile has been updated.
 0.6.6: The small changes.
 0.6.6.1: The documentation has been updated.
+0.6.7: The small changes.

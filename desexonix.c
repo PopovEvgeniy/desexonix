@@ -43,17 +43,17 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
  progress=(start+1)*100;
  progress/=stop;
  putchar('\r');
- printf("Amount of the extracted files: %lu from %lu.Progress:%lu%%",start+1,stop,progress);
+ printf("Amount of the extracted files: %lu from %lu.The progress:%lu%%",start+1,stop,progress);
 }
 
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.6.6");
+ puts("Desexonix. Version 0.6.7");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2025 years");
- puts("This program is distributed under GNU GENERAL PUBLIC LICENSE");
+ puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
- puts("It was relicensed with permission from the author");
+ puts("It was relicensed with the permission of the author");
 }
 
 void show_message(const char *message)
@@ -101,7 +101,7 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
-  puts("Invalid length of the target file");
+  puts("The target file length is invalid");
   exit(3);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);
@@ -180,10 +180,6 @@ void decrypt_data(unsigned char *target,const size_t length)
 
 tga_head prepare_head()
 {
- /*
- This code is based on XXX Games tools sources by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
- It was relicensed with permission from the author.
- */
  tga_head target;
  target.id=0;
  target.x_offset=0;
