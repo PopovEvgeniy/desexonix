@@ -2,24 +2,24 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 0.6.7
+                             Version 0.6.7.1
 
-System requirements
+System requirements.
 
-68 kilobytes of free space on storage media.
+68 kilobytes of free space on the storage medium.
 100 kilobytes of free RAM.
 
-Description and usage
+The program description.
 
 This program lets you extract the images from the Sexonix game. It is stored in the Sexonix.pic file.
 The extracted images will be saved in Truevision TGA format (256 colors with an indexed palette).
 This program takes a target file name as the command-line argument.
 
-License
+License.
 
 This program is distributed under the GNU GENERAL PUBLIC LICENSE.
 
-Exit codes
+Exit codes.
 
 0: The operation was successfully completed.
 1: Can't open the input file.
@@ -27,19 +27,19 @@ Exit codes
 3: The target file length is invalid.
 4: Can't allocate memory.
 
-Third-party code
+The third-party code.
 
 Some code was taken from XXX Games tools by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
 It was relicensed with the permission of the author.
 
-Source code
+The source code.
 
 The code was compiled under Open Watcom.
 You can compile it with any modern C compiler.
 The source code can be compiled for a wide range of operating systems, but you need to create a makefile or a build script by yourself.
 I provide only two things: the binary file for Windows and the makefile for Linux.
 
-Install and uninstall under Linux
+Install and uninstall under Linux.
 
 Follow these steps:
 
@@ -49,9 +49,9 @@ Follow these steps:
 Run as root to install: make install
 Run as root to uninstall: make uninstall
 
-Version history
+Version history.
 
-0.1: Initial version.
+0.1: The initial version.
 0.2: The target file size checking has been added.
 0.3-0.4.2: The small changes.
 0.4.3: A small bug has been fixed.
@@ -71,3 +71,4 @@ Version history
 0.6.6: The small changes.
 0.6.6.1: The documentation has been updated.
 0.6.7: The small changes.
+0.6.7.1: The documentation has been updated.
