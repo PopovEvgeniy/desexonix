@@ -3,7 +3,7 @@
 #define TOP_LEFT 0x20
 
 /*
-This code is based on XXX Games tools sources by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
+This code is based on XXX Games tools source codes by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
 It was relicensed with the permission of the author.
 */
 

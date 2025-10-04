@@ -49,7 +49,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.6.8");
+ puts("Desexonix. Version 0.6.9");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2025 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -162,7 +162,7 @@ char *get_name(const unsigned long int index,const char *short_name,const char *
 unsigned char *create_buffer(const size_t length)
 {
  unsigned char *buffer=NULL;
- buffer=(unsigned char *)malloc(length*sizeof(unsigned char));
+ buffer=(unsigned char*)malloc(length);
  check_memory(buffer);
  return buffer;
 }
