@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
  }
  else
  {
-  show_message("Extracting a graphics... Please wait");
+  show_message("Working...");
   work(argv[1]);
   show_message("The work has been finished");
  }
@@ -49,7 +49,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.6.9");
+ puts("Desexonix. Version 0.7");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2025 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
