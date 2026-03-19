@@ -4,9 +4,9 @@
 void show_intro();
 void show_message(const char *message);
 void show_progress(const unsigned long int start,const unsigned long int stop);
+unsigned long int get_file_size(FILE *target);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
-unsigned long int get_file_size(FILE *file);
 unsigned long int check_file_size(FILE *target);
 void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
@@ -39,18 +39,15 @@ int main(int argc, char *argv[])
 
 void show_progress(const unsigned long int start,const unsigned long int stop)
 {
- unsigned long int progress;
- progress=(start+1)*100;
- progress/=stop;
  putchar('\r');
- printf("Amount of the extracted files: %lu from %lu.The progress:%lu%%",start+1,stop,progress);
+ printf("Amount of the extracted files: %lu from %lu.The progress:%lu%%",start,stop,(start*100)/stop);
 }
 
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.7");
- puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2025 years");
+ puts("Desexonix. Version 0.7.1");
+ puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
  puts("It was relicensed with the permission of the author");
@@ -60,6 +57,15 @@ void show_message(const char *message)
 {
  putchar('\n');
  puts(message);
+}
+
+unsigned long int get_file_size(FILE *target)
+{
+ unsigned long int length;
+ fseek(target,0,SEEK_END);
+ length=ftell(target);
+ rewind(target);
+ return length;
 }
 
 FILE *open_input_file(const char *name)
@@ -84,15 +90,6 @@ FILE *create_output_file(const char *name)
   exit(2);
  }
  return target;
-}
-
-unsigned long int get_file_size(FILE *file)
-{
- unsigned long int length;
- fseek(file,0,SEEK_END);
- length=ftell(file);
- rewind(file);
- return length;
 }
 
 unsigned long int check_file_size(FILE *target)
@@ -127,17 +124,18 @@ char *get_string_memory(const size_t length)
 
 size_t get_extension_position(const char *source)
 {
- size_t index;
- for(index=strlen(source);index>0;--index)
+ size_t index,position;
+ position=strlen(source);
+ for(index=position;index>0;--index)
  {
   if(source[index]=='.')
   {
+   position=index;
    break;
   }
 
  }
- if (index==0) index=strlen(source);
- return index;
+ return position;
 }
 
 char *get_short_name(const char *name)
@@ -244,7 +242,7 @@ void work(const char *target)
  amount=check_file_size(input);
  for (index=0;index<amount;++index)
  {
-  show_progress(index,amount);
+  show_progress(index+1,amount);
   name=get_name(index+1,short_name,".tga");
   output=create_output_file(name);
   fread(palette,sizeof(unsigned char),PALETTE_LENGTH,input);
