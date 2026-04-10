@@ -7,6 +7,8 @@ void show_progress(const unsigned long int start,const unsigned long int stop);
 unsigned long int get_file_size(FILE *target);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
+void read_data(void *data,const size_t length,FILE *input);
+void write_data(const void *data,const size_t length,FILE *output);
 unsigned long int check_file_size(FILE *target);
 void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
@@ -46,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.7.1");
+ puts("Desexonix. Version 0.7.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -92,6 +94,30 @@ FILE *create_output_file(const char *name)
  return target;
 }
 
+void read_data(void *data,const size_t length,FILE *input)
+{
+ fread(data,length,sizeof(char),input);
+ if (ferror(input)!=0)
+ {
+  putchar('\n');
+  puts("Can't read data!");
+  exit(3);
+ }
+
+}
+
+void write_data(const void *data,const size_t length,FILE *output)
+{
+ fwrite(data,length,sizeof(char),output);
+ if (ferror(output)!=0)
+ {
+  putchar('\n');
+  puts("Can't write data!");
+  exit(4);
+ }
+
+}
+
 unsigned long int check_file_size(FILE *target)
 {
  unsigned long int length;
@@ -99,7 +125,7 @@ unsigned long int check_file_size(FILE *target)
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
   puts("The target file length is invalid");
-  exit(3);
+  exit(5);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);
 }
@@ -109,7 +135,7 @@ void check_memory(const void *memory)
  if(memory==NULL)
  {
   show_message("Can't allocate memory");
-  exit(4);
+  exit(6);
  }
 
 }
@@ -245,15 +271,15 @@ void work(const char *target)
   show_progress(index+1,amount);
   name=get_name(index+1,short_name,".tga");
   output=create_output_file(name);
-  fread(palette,sizeof(unsigned char),PALETTE_LENGTH,input);
-  fread(data,sizeof(unsigned char),IMAGE_LENGTH,input);
+  read_data(palette,PALETTE_LENGTH,input);
+  read_data(data,IMAGE_LENGTH,input);
   decrypt_data(palette,PALETTE_LENGTH);
   decrypt_data(data,IMAGE_LENGTH);
   convert_palette(palette);
   correct_colors(palette);
-  fwrite(&image_head,sizeof(tga_head),sizeof(unsigned char),output);
-  fwrite(palette,sizeof(unsigned char),PALETTE_LENGTH,output);
-  fwrite(data,sizeof(unsigned char),IMAGE_LENGTH,output);
+  write_data(&image_head,sizeof(tga_head),output);
+  write_data(palette,PALETTE_LENGTH,output);
+  write_data(data,IMAGE_LENGTH,output);
   free(name);
   fclose(output);
  }

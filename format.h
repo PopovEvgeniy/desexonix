@@ -10,17 +10,17 @@ It was relicensed with the permission of the author.
 #pragma pack(push, 1)
 typedef struct
 {
- unsigned char id:8;
- unsigned char map_type:8;
- unsigned char image_type:8;
- unsigned short int map_start:16;
- unsigned short int map_length:16;
- unsigned char map_depth:8;
- unsigned short int x_offset:16;
- unsigned short int y_offset:16;
- unsigned short int width:16;
- unsigned short int height:16;
- unsigned char depth:8;
- unsigned char descriptor:8;
+ unsigned char id;
+ unsigned char map_type;
+ unsigned char image_type;
+ unsigned short int map_start;
+ unsigned short int map_length;
+ unsigned char map_depth;
+ unsigned short int x_offset;
+ unsigned short int y_offset;
+ unsigned short int width;
+ unsigned short int height;
+ unsigned char depth;
+ unsigned char descriptor;
 } tga_head;
 #pragma pack(pop)
