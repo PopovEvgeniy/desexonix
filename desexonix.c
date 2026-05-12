@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.7.5");
+ puts("Desexonix. Version 0.7.6");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -99,8 +99,7 @@ void read_data(void *data,const size_t length,FILE *input)
  fread(data,length,sizeof(char),input);
  if (ferror(input)!=0)
  {
-  putchar('\n');
-  puts("Can't read data!");
+  show_message("Can't read data!");
   exit(3);
  }
 
@@ -111,8 +110,7 @@ void write_data(const void *data,const size_t length,FILE *output)
  fwrite(data,length,sizeof(char),output);
  if (ferror(output)!=0)
  {
-  putchar('\n');
-  puts("Can't write data!");
+  show_message("Can't write data!");
   exit(4);
  }
 
