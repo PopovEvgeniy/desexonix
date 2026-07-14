@@ -49,7 +49,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.7.7");
+ puts("Desexonix. Version 0.7.8");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -163,17 +163,19 @@ size_t get_path_delimitor_position(const char *source)
 
 size_t get_extension_position(const char *source)
 {
- size_t index,length;
- length=strlen(source);
- for (index=get_path_delimitor_position(source);index<length;++index)
+ size_t index,position,stop;
+ position=strlen(source);
+ stop=get_path_delimitor_position(source);
+ for (index=position;index>stop;--index)
  {
   if (source[index]=='.')
   {
+   position=index;
    break;
   }
 
  }
- return index;
+ return position;
 }
 
 char *get_short_name(const char *name)
