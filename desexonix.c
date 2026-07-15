@@ -49,7 +49,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.8.1");
+ puts("Desexonix. Version 0.8.8");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -149,45 +149,54 @@ char *get_string_memory(const size_t length)
 
 size_t get_path_length(const char *source)
 {
- size_t index,length;
+ size_t index,length,path_length;
  length=0;
- for (index=strlen(source);index>0;--index)
+ path_length=0;
+ if (source!=NULL)
  {
-  if ((source[index-1]=='\\')||(source[index-1]=='/'))
+  length=strlen(source);
+ }
+ for (index=0;index<length;++index)
+ {
+  if (source[index]==DIRECTORY_SEPARATOR)
   {
-   length=index;
-   break;
+   path_length=index+1;
   }
 
  }
- return length;
+ return path_length;
 }
 
 size_t get_extension_position(const char *source)
 {
- size_t index,position,stop;
- position=strlen(source);
- stop=get_path_length(source);
- if (stop>0)
+ size_t index,position,start,length;
+ start=0;
+ position=0;
+ length=0;
+ if (source!=NULL)
  {
-  --stop;
+  start=get_path_length(source);
+  length=strlen(source);
  }
- for (index=position;index>stop;--index)
+ for (index=start;index<length;++index)
  {
-  if (source[index-1]=='.')
+  if (source[index]=='.')
   {
-   position=index-1;
-   break;
+   position=index;
   }
 
  }
- if (position==0)
+ if (position==start)
  {
-  position=strlen(source);
+  position=length;
  }
- if (position==(stop+1))
+ if (length>0)
  {
-  position=strlen(source);
+  if (position==(length-1))
+  {
+   --position;
+  }
+
  }
  return position;
 }
@@ -196,18 +205,29 @@ char *get_short_name(const char *name)
 {
  size_t length;
  char *result=NULL;
- length=get_extension_position(name);
- result=get_string_memory(length);
- return strncpy(result,name,length);
+ if (name!=NULL)
+ {
+  length=get_extension_position(name);
+  result=get_string_memory(length);
+  strncpy(result,name,length);
+ }
+ return result;
 }
 
 char *get_name(const unsigned long int index,const char *short_name,const char *extension)
 {
  char *name=NULL;
  size_t length;
- length=strlen(short_name)+strlen(extension)+12;
- name=get_string_memory(length);
- sprintf(name,"%s%lu%s",short_name,index,extension);
+ if (short_name!=NULL)
+ {
+  if (extension!=NULL)
+  {
+   length=strlen(short_name)+strlen(extension)+12;
+   name=get_string_memory(length);
+   sprintf(name,"%s%lu%s",short_name,index,extension);
+  }
+
+ }
  return name;
 }
 
