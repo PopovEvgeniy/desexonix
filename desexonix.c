@@ -14,6 +14,7 @@ void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
 size_t get_path_length(const char *source);
 size_t get_extension_position(const char *source);
+size_t get_short_name_length(const char *source);
 char *get_short_name(const char *name);
 char *get_name(const unsigned long int index,const char *short_name,const char *extension);
 unsigned char *create_buffer(const size_t length);
@@ -49,7 +50,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.9.1");
+ puts("Desexonix. Version 0.9.4");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -178,13 +179,13 @@ size_t get_extension_position(const char *source)
  {
   start=get_path_length(source);
   length=strlen(source);
-  position=length;
  }
- for (index=start;index<length;++index)
+ for (index=length;index>start;--index)
  {
-  if (source[index]=='.')
+  if (source[index-1]=='.')
   {
-   position=index;
+   position=index-1;
+   break;
   }
 
  }
@@ -192,7 +193,7 @@ size_t get_extension_position(const char *source)
  {
   if (position==start)
   {
-   position=length;
+   position=length-1;
   }
   if (position==(length-1))
   {
@@ -203,14 +204,31 @@ size_t get_extension_position(const char *source)
  return position;
 }
 
-char *get_short_name(const char *name)
+size_t get_short_name_length(const char *source)
 {
  size_t length=0;
- char *result=NULL;
- if (name!=NULL)
+ size_t position=0;
+ if (source!=NULL)
  {
-  length=get_extension_position(name);
+  length=strlen(source);
+  position=get_extension_position(source);
  }
+ if (length>0)
+ {
+  if (position>0)
+  {
+   length=position+1;
+  }
+
+ }
+ return length;
+}
+
+char *get_short_name(const char *name)
+{
+ char *result=NULL;
+ size_t length;
+ length=get_short_name_length(name);
  if (length>0)
  {
   result=get_string_memory(length);
