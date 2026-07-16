@@ -14,9 +14,9 @@ void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
 size_t get_path_length(const char *source);
 size_t get_extension_position(const char *source);
-size_t get_short_name_length(const char *source);
-char *get_short_name(const char *name);
-char *get_name(const unsigned long int index,const char *short_name,const char *extension);
+size_t get_name_without_extension_length(const char *source);
+char *get_name_without_extension(const char *name);
+char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension);
 unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length);
 tga_head prepare_head();
@@ -50,7 +50,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.9.4");
+ puts("Desexonix. Version 0.9.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -204,7 +204,7 @@ size_t get_extension_position(const char *source)
  return position;
 }
 
-size_t get_short_name_length(const char *source)
+size_t get_name_without_extension_length(const char *source)
 {
  size_t length=0;
  size_t position=0;
@@ -224,11 +224,11 @@ size_t get_short_name_length(const char *source)
  return length;
 }
 
-char *get_short_name(const char *name)
+char *get_name_without_extension(const char *name)
 {
  char *result=NULL;
  size_t length;
- length=get_short_name_length(name);
+ length=get_name_without_extension_length(name);
  if (length>0)
  {
   result=get_string_memory(length);
@@ -237,17 +237,17 @@ char *get_short_name(const char *name)
  return result;
 }
 
-char *get_name(const unsigned long int index,const char *short_name,const char *extension)
+char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension)
 {
  char *name=NULL;
  size_t length;
- if (short_name!=NULL)
+ if (name_without_extension!=NULL)
  {
   if (extension!=NULL)
   {
-   length=strlen(short_name)+strlen(extension)+12;
+   length=strlen(name_without_extension)+strlen(extension)+12;
    name=get_string_memory(length);
-   sprintf(name,"%s%lu%s",short_name,index,extension);
+   sprintf(name,"%s%lu%s",name_without_extension,index,extension);
   }
 
  }
@@ -324,7 +324,7 @@ void correct_colors(unsigned char *palette)
 void work(const char *target)
 {
  unsigned long int index,amount;
- char *short_name;
+ char *name_without_extension;
  char *name;
  unsigned char *data;
  unsigned char *palette;
@@ -335,12 +335,12 @@ void work(const char *target)
  palette=create_buffer(PALETTE_LENGTH);
  image_head=prepare_head();
  input=open_input_file(target);
- short_name=get_short_name(target);
+ name_without_extension=get_name_without_extension(target);
  amount=check_file_size(input);
  for (index=0;index<amount;++index)
  {
   show_progress(index+1,amount);
-  name=get_name(index+1,short_name,".tga");
+  name=get_name(index+1,name_without_extension,".tga");
   output=create_output_file(name);
   read_data(palette,PALETTE_LENGTH,input);
   read_data(data,IMAGE_LENGTH,input);
@@ -356,6 +356,6 @@ void work(const char *target)
  }
  free(data);
  free(palette);
- free(short_name);
+ free(name_without_extension);
  fclose(input);
 }
