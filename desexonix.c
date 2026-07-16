@@ -49,7 +49,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.8.8");
+ puts("Desexonix. Version 0.9");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -149,22 +149,23 @@ char *get_string_memory(const size_t length)
 
 size_t get_path_length(const char *source)
 {
- size_t index,length,path_length;
+ size_t index,steps,length;
+ steps=0;
  length=0;
- path_length=0;
  if (source!=NULL)
  {
-  length=strlen(source);
+  steps=strlen(source);
  }
- for (index=0;index<length;++index)
+ for (index=steps;index>0;--index)
  {
-  if (source[index]==DIRECTORY_SEPARATOR)
+  if (source[index-1]==DIRECTORY_SEPARATOR)
   {
-   path_length=index+1;
+   length=index;
+   break;
   }
 
  }
- return path_length;
+ return length;
 }
 
 size_t get_extension_position(const char *source)
@@ -186,12 +187,12 @@ size_t get_extension_position(const char *source)
   }
 
  }
- if (position==start)
- {
-  position=length;
- }
  if (length>0)
  {
+  if (position==start)
+  {
+   position=length;
+  }
   if (position==(length-1))
   {
    --position;
@@ -203,11 +204,14 @@ size_t get_extension_position(const char *source)
 
 char *get_short_name(const char *name)
 {
- size_t length;
+ size_t length=0;
  char *result=NULL;
  if (name!=NULL)
  {
   length=get_extension_position(name);
+ }
+ if (length>0)
+ {
   result=get_string_memory(length);
   strncpy(result,name,length);
  }
