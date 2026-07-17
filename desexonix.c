@@ -12,8 +12,6 @@ void write_data(const void *data,const size_t length,FILE *output);
 unsigned long int check_file_size(FILE *target);
 void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
-size_t get_path_length(const char *source);
-size_t get_extension_position(const char *source);
 size_t get_name_without_extension_length(const char *source);
 char *get_name_without_extension(const char *name);
 char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension);
@@ -50,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.9.5");
+ puts("Desexonix. Version 0.9.7");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -148,76 +146,40 @@ char *get_string_memory(const size_t length)
  return memory;
 }
 
-size_t get_path_length(const char *source)
-{
- size_t index,steps,length;
- steps=0;
- length=0;
- if (source!=NULL)
- {
-  steps=strlen(source);
- }
- for (index=steps;index>0;--index)
- {
-  if (source[index-1]==DIRECTORY_SEPARATOR)
-  {
-   length=index;
-   break;
-  }
-
- }
- return length;
-}
-
-size_t get_extension_position(const char *source)
-{
- size_t index,position,start,length;
- start=0;
- position=0;
- length=0;
- if (source!=NULL)
- {
-  start=get_path_length(source);
-  length=strlen(source);
- }
- for (index=length;index>start;--index)
- {
-  if (source[index-1]=='.')
-  {
-   position=index-1;
-   break;
-  }
-
- }
- if (length>0)
- {
-  if (position==start)
-  {
-   position=length-1;
-  }
-  if (position==(length-1))
-  {
-   --position;
-  }
-
- }
- return position;
-}
-
 size_t get_name_without_extension_length(const char *source)
 {
  size_t length=0;
- size_t position=0;
+ size_t index;
  if (source!=NULL)
  {
   length=strlen(source);
-  position=get_extension_position(source);
+ }
+ if (length>=1)
+ {
+  if (source[length-1]=='.')
+  {
+   --length;
+  }
+
  }
  if (length>0)
  {
-  if (position>0)
+  if (source[length-1]==DIRECTORY_SEPARATOR)
   {
-   length=position+1;
+   length=0;
+  }
+
+ }
+ for (index=length;index>0;--index)
+ {
+  if (source[index-1]==DIRECTORY_SEPARATOR)
+  {
+   break;
+  }
+  if (source[index-1]=='.')
+  {
+   length=index-1;
+   break;
   }
 
  }
