@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.0.1
+                             Version 1.0.3
 
 The program description.
 
@@ -88,4 +88,4 @@ Version history.
 0.9.7: The small changes.
 0.9.8: A small bug has been fixed.
 0.9.9: The small changes.
-1.0-1.0.1: A small bug has been fixed.
+1.0-1.0.3: A small bug has been fixed.
