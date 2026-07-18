@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 0.9.7");
+ puts("Desexonix. Version 0.9.9");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -148,40 +148,55 @@ char *get_string_memory(const size_t length)
 
 size_t get_name_without_extension_length(const char *source)
 {
+ size_t index=0;
  size_t length=0;
- size_t index;
+ size_t position=0;
+ size_t start=0;
+ size_t dot=0;
+ size_t last=0;
  if (source!=NULL)
  {
   length=strlen(source);
  }
- if (length>=1)
- {
-  if (source[length-1]=='.')
-  {
-   --length;
-  }
-
- }
  if (length>0)
  {
-  if (source[length-1]==DIRECTORY_SEPARATOR)
-  {
-   length=0;
-  }
-
+  last=length-1;
  }
  for (index=length;index>0;--index)
  {
-  if (source[index-1]==DIRECTORY_SEPARATOR)
+  position=index-1;
+  if (source[position]==DIRECTORY_SEPARATOR)
   {
-   break;
-  }
-  if (source[index-1]=='.')
-  {
-   length=index-1;
+   start=index;
    break;
   }
 
+ }
+ for (index=start;index>0;--index)
+ {
+  position=index-1;
+  if (source[position]=='.')
+  {
+   if (position==last)
+   {
+    continue;
+   }
+   if (position>start)
+   {
+    dot=position;
+    break;
+   }
+
+  }
+
+ }
+ if (dot>start)
+ {
+  length=dot;
+ }
+ if (start==last)
+ {
+  length=0;
  }
  return length;
 }
