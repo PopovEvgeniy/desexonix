@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.0.4");
+ puts("Desexonix. Version 1.0.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -150,48 +150,44 @@ size_t get_name_without_extension_length(const char *source)
 {
  size_t index=0;
  size_t length=0;
- size_t position=0;
- size_t start=0;
- size_t dot=0;
+ size_t last=0;
+ size_t slash=0;
+ size_t dot=ULONG_MAX;
  if (source!=NULL)
  {
   length=strlen(source);
  }
  if (length>0)
  {
-  dot=length;
+  last=length-1;
  }
- for (index=length;index>0;--index)
+ for (index;index<length;++index)
  {
-  position=index-1;
-  if (source[position]==DIRECTORY_SEPARATOR)
+  if (source[index]==DIRECTORY_SEPARATOR)
   {
-   start=index;
-   break;
+   slash=index;
   }
-
- }
- for (index=length;index>start;--index)
- {
-  position=index-1;
-  if (source[position]=='.')
+  if (source[index]=='.')
   {
-   if (position>start)
+   if (index>slash)
    {
-    dot=position;
-    break;
+    dot=index;
    }
 
   }
 
  }
- if (start==length)
+ if (dot!=ULONG_MAX)
+ {
+  if (dot>(slash+1))
+  {
+   length=dot;
+  }
+
+ }
+ if (slash==last)
  {
   length=0;
- }
- if (dot<length)
- {
-  length=dot;
  }
  return length;
 }
