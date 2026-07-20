@@ -8,7 +8,6 @@
 #define DIRECTORY_SEPARATOR '/'
 #endif
 
-#include <limits.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
