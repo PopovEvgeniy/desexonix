@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.2.2");
+ puts("Desexonix. Version 1.2.3");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -176,8 +176,12 @@ size_t get_name_without_extension_length(const char *source)
   {
    if (position>0)
    {
-    length=position;
-    break;
+    if ((source[position-1]!=DIRECTORY_SEPARATOR) && (source[position-1]!='.'))
+    {
+     length=position;
+     break;
+    }
+
    }
 
   }
