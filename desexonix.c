@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.1.8");
+ puts("Desexonix. Version 1.2.2");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -72,7 +72,12 @@ unsigned long int get_file_size(FILE *target)
 
 FILE *open_input_file(const char *name)
 {
- FILE *target;
+ FILE *target=NULL;
+ if (name==NULL)
+ {
+  puts("Can't open the input file");
+  exit(1);
+ }
  target=fopen(name,"rb");
  if (target==NULL)
  {
@@ -84,7 +89,12 @@ FILE *open_input_file(const char *name)
 
 FILE *create_output_file(const char *name)
 {
- FILE *target;
+ FILE *target=NULL;
+ if (name==NULL)
+ {
+  show_message("Can't create the ouput file");
+  exit(2);
+ }
  target=fopen(name,"wb");
  if (target==NULL)
  {
@@ -150,17 +160,12 @@ size_t get_name_without_extension_length(const char *source)
 {
  size_t index=0;
  size_t position=0;
- size_t original=0;
  size_t length=0;
  if (source!=NULL)
  {
-  original=strlen(source);
+  length=strlen(source);
  }
- if (original>0)
- {
-  length=original;
- }
- for (index=original;index>0;--index)
+ for (index=length;index>0;--index)
  {
   position=index-1;
   if (source[position]==DIRECTORY_SEPARATOR)
@@ -171,16 +176,8 @@ size_t get_name_without_extension_length(const char *source)
   {
    if (position>0)
    {
-    if (source[position-1]==DIRECTORY_SEPARATOR)
-    {
-     break;
-    }
-    else
-    {
-     length=position;
-     break;
-    }
-
+    length=position;
+    break;
    }
 
   }
