@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.2.3");
+ puts("Desexonix. Version 1.2.4");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -63,7 +63,7 @@ void show_message(const char *message)
 
 unsigned long int get_file_size(FILE *target)
 {
- unsigned long int length;
+ unsigned long int length=0;
  fseek(target,0,SEEK_END);
  length=ftell(target);
  rewind(target);
@@ -128,7 +128,7 @@ void write_data(const void *data,const size_t length,FILE *output)
 
 unsigned long int check_file_size(FILE *target)
 {
- unsigned long int length;
+ unsigned long int length=0;
  length=get_file_size(target);
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
@@ -193,7 +193,7 @@ size_t get_name_without_extension_length(const char *source)
 char *get_name_without_extension(const char *name)
 {
  char *result=NULL;
- size_t length;
+ size_t length=0;
  length=get_name_without_extension_length(name);
  if (length>0)
  {
@@ -206,7 +206,7 @@ char *get_name_without_extension(const char *name)
 char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension)
 {
  char *name=NULL;
- size_t length;
+ size_t length=0;
  if (name_without_extension!=NULL)
  {
   if (extension!=NULL)
@@ -230,7 +230,7 @@ unsigned char *create_buffer(const size_t length)
 
 void decrypt_data(unsigned char *target,const size_t length)
 {
- size_t index;
+ size_t index=0;
  for (index=0;index<length;++index)
  {
   target[index]^=0x55;
@@ -258,8 +258,9 @@ tga_head prepare_head()
 
 void convert_palette(unsigned char *palette)
 {
- size_t index;
- unsigned char red,blue;
+ size_t index=0;
+ unsigned char red=0;
+ unsigned char blue=0;
  for (index=0;index<PALETTE_LENGTH;index+=3)
  {
   red=palette[index];
@@ -277,8 +278,8 @@ unsigned char correct_level(const unsigned char level)
 
 void correct_colors(unsigned char *palette)
 {
- size_t index;
- unsigned char level;
+ size_t index=0;
+ unsigned char level=0;
  for (index=0;index<PALETTE_LENGTH;++index)
  {
   level=correct_level(palette[index]);
@@ -289,13 +290,14 @@ void correct_colors(unsigned char *palette)
 
 void work(const char *target)
 {
- unsigned long int index,amount;
- char *name_without_extension;
- char *name;
- unsigned char *data;
- unsigned char *palette;
- FILE *input;
- FILE *output;
+ unsigned long int index=0;
+ unsigned long int amount=0;
+ char *name_without_extension=NULL;
+ char *name=NULL;
+ unsigned char *data=NULL;
+ unsigned char *palette=NULL;
+ FILE *input=NULL;
+ FILE *output=NULL;
  tga_head image_head;
  data=create_buffer(IMAGE_LENGTH);
  palette=create_buffer(PALETTE_LENGTH);
