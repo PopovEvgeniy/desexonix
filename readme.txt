@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.2.4
+                             Version 1.2.5
 
 The program description.
 
@@ -19,10 +19,11 @@ Exit codes.
 0: The operation was successfully completed.
 1: Can't open the input file.
 2: Can't create the output file.
-3: Can't read data!
-4: Can't write data!
-5: The target file length is invalid.
-6: Can't allocate memory.
+3: Can't get the file size!
+4: Can't read data!
+5: Can't write data!
+6: The target file length is invalid.
+7: Can't allocate memory.
 
 The third-party code.
 
@@ -99,4 +100,4 @@ Version history.
 1.1.8: A small bug has been fixed.
 1.1.9-1.2.2: The small changes.
 1.2.3: A small bug has been fixed.
-1.2.4: The small changes.
+1.2.4-1.2.5: The small changes.

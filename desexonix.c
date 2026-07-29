@@ -4,9 +4,9 @@
 void show_intro();
 void show_message(const char *message);
 void show_progress(const unsigned long int start,const unsigned long int stop);
-unsigned long int get_file_size(FILE *target);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
+unsigned long int get_file_size(FILE *target);
 void read_data(void *data,const size_t length,FILE *input);
 void write_data(const void *data,const size_t length,FILE *output);
 unsigned long int check_file_size(FILE *target);
@@ -48,7 +48,7 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.2.4");
+ puts("Desexonix. Version 1.2.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -59,15 +59,6 @@ void show_message(const char *message)
 {
  putchar('\n');
  puts(message);
-}
-
-unsigned long int get_file_size(FILE *target)
-{
- unsigned long int length=0;
- fseek(target,0,SEEK_END);
- length=ftell(target);
- rewind(target);
- return length;
 }
 
 FILE *open_input_file(const char *name)
@@ -104,13 +95,26 @@ FILE *create_output_file(const char *name)
  return target;
 }
 
+unsigned long int get_file_size(FILE *target)
+{
+ unsigned long int length=0;
+ if (fseek(target,0,SEEK_END)!=0)
+ {
+  puts("Can't get the file size!");
+  exit(3);
+ }
+ length=ftell(target);
+ rewind(target);
+ return length;
+}
+
 void read_data(void *data,const size_t length,FILE *input)
 {
  fread(data,length,sizeof(char),input);
  if (ferror(input)!=0)
  {
   show_message("Can't read data!");
-  exit(3);
+  exit(4);
  }
 
 }
@@ -121,7 +125,7 @@ void write_data(const void *data,const size_t length,FILE *output)
  if (ferror(output)!=0)
  {
   show_message("Can't write data!");
-  exit(4);
+  exit(5);
  }
 
 }
@@ -133,7 +137,7 @@ unsigned long int check_file_size(FILE *target)
  if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
  {
   puts("The target file length is invalid");
-  exit(5);
+  exit(6);
  }
  return length/(IMAGE_LENGTH+PALETTE_LENGTH);
 }
@@ -143,7 +147,7 @@ void check_memory(const void *memory)
  if(memory==NULL)
  {
   show_message("Can't allocate memory");
-  exit(6);
+  exit(7);
  }
 
 }
