@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
  if (argc<2)
  {
   show_message("You must give a target file name as the command-line argument!");
+  exit(8);
  }
  else
  {
@@ -42,13 +43,13 @@ int main(int argc, char *argv[])
 void show_progress(const unsigned long int start,const unsigned long int stop)
 {
  putchar('\r');
- printf("Amount of the extracted files: %lu from %lu.The progress:%lu%%",start,stop,(start*100)/stop);
+ printf("Amount of the extracted files: %lu from %lu",start,stop);
 }
 
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.2.6");
+ puts("Desexonix. Version 1.3.1");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -110,8 +111,7 @@ unsigned long int get_file_size(FILE *target)
 
 void read_data(void *data,const size_t length,FILE *input)
 {
- fread(data,sizeof(char),length,input);
- if (ferror(input)!=0)
+ if (fread(data,sizeof(char),length,input)<length)
  {
   show_message("Can't read data!");
   exit(4);
@@ -121,8 +121,7 @@ void read_data(void *data,const size_t length,FILE *input)
 
 void write_data(const void *data,const size_t length,FILE *output)
 {
- fwrite(data,sizeof(char),length,output);
- if (ferror(output)!=0)
+ if (fwrite(data,sizeof(char),length,output)<length)
  {
   show_message("Can't write data!");
   exit(5);
@@ -134,12 +133,17 @@ unsigned long int check_file_size(FILE *target)
 {
  unsigned long int length=0;
  length=get_file_size(target);
- if (length<(IMAGE_LENGTH+PALETTE_LENGTH))
+ if (length==0)
  {
   puts("The target file length is invalid");
   exit(6);
  }
- return length/(IMAGE_LENGTH+PALETTE_LENGTH);
+ if ((length%FULL_IMAGE_LENGTH)!=0)
+ {
+  puts("The target file length is invalid");
+  exit(6);
+ }
+ return length/FULL_IMAGE_LENGTH;
 }
 
 void check_memory(const void *memory)
@@ -313,13 +317,13 @@ void work(const char *target)
  {
   show_progress(index+1,amount);
   name=get_name(index+1,name_without_extension,".tga");
-  output=create_output_file(name);
   read_data(palette,PALETTE_LENGTH,input);
   read_data(data,IMAGE_LENGTH,input);
   decrypt_data(palette,PALETTE_LENGTH);
   decrypt_data(data,IMAGE_LENGTH);
   convert_palette(palette);
   correct_colors(palette);
+  output=create_output_file(name);
   write_data(&image_head,sizeof(tga_head),output);
   write_data(palette,PALETTE_LENGTH,output);
   write_data(data,IMAGE_LENGTH,output);

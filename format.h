@@ -1,5 +1,6 @@
 #define IMAGE_LENGTH 64000
 #define PALETTE_LENGTH 768
+#define FULL_IMAGE_LENGTH 64768
 #define TOP_LEFT 0x20
 
 /*
