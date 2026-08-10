@@ -1,7 +1,17 @@
 #define IMAGE_LENGTH 64000
 #define PALETTE_LENGTH 768
 #define FULL_IMAGE_LENGTH 64768
+#define IMAGE_WIDTH 320
+#define IMAGE_HEIGHT 200
+#define IMAGE_TYPE 1
+#define COLOR_BITS 8
+#define MAP_START 0
+#define MAP_TYPE 1
+#define MAP_DEPTH 24
+#define MAP_LENGTH 256
+#define TGA_ID 0
 #define TOP_LEFT 0x20
+#define ENCRYPTION_KEY 0x55
 
 /*
 This code is based on XXX Games tools source codes by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).

@@ -1,5 +1,6 @@
 #include "desexonix.h"
 #include "format.h"
+#include "exitcode.h"
 
 void show_intro();
 void show_message(const char *message);
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
  if (argc<2)
  {
   show_message("You must give a target file name as the command-line argument!");
-  exit(8);
+  exit(COMMAND_LINE_ARGUMENTS_ERROR);
  }
  else
  {
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.3.4");
+ puts("Desexonix. Version 1.3.7");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -75,13 +76,13 @@ FILE *open_input_file(const char *name)
  if (name==NULL)
  {
   show_error("Can't open the input file");
-  exit(1);
+  exit(OPEN_FILE_ERROR);
  }
  target=fopen(name,"rb");
  if (target==NULL)
  {
   show_error("Can't open the input file");
-  exit(1);
+  exit(OPEN_FILE_ERROR);
  }
  return target;
 }
@@ -92,13 +93,13 @@ FILE *create_output_file(const char *name)
  if (name==NULL)
  {
   show_error("Can't create the ouput file");
-  exit(2);
+  exit(CREATE_FILE_ERROR);
  }
  target=fopen(name,"wb");
  if (target==NULL)
  {
   show_error("Can't create the ouput file");
-  exit(2);
+  exit(CREATE_FILE_ERROR);
  }
  return target;
 }
@@ -109,7 +110,7 @@ unsigned long int get_file_size(FILE *target)
  if (fseek(target,0,SEEK_END)!=0)
  {
   show_error("Can't get the file size!");
-  exit(3);
+  exit(GET_FILE_SIZE_ERROR);
  }
  length=ftell(target);
  rewind(target);
@@ -121,7 +122,7 @@ void read_data(void *data,const size_t length,FILE *input)
  if (fread(data,sizeof(char),length,input)<length)
  {
   show_error("Can't read data!");
-  exit(4);
+  exit(READ_DATA_ERROR);
  }
 
 }
@@ -131,7 +132,7 @@ void write_data(const void *data,const size_t length,FILE *output)
  if (fwrite(data,sizeof(char),length,output)<length)
  {
   show_error("Can't write data!");
-  exit(5);
+  exit(WRITE_DATA_ERROR);
  }
 
 }
@@ -143,12 +144,12 @@ unsigned long int check_file_size(FILE *target)
  if (length==0)
  {
   show_error("The target file length is invalid");
-  exit(6);
+  exit(CHECK_FILE_SIZE_ERROR);
  }
  if ((length%FULL_IMAGE_LENGTH)!=0)
  {
   show_error("The target file length is invalid");
-  exit(6);
+  exit(CHECK_FILE_SIZE_ERROR);
  }
  return length/FULL_IMAGE_LENGTH;
 }
@@ -158,7 +159,7 @@ void check_memory(const void *memory)
  if(memory==NULL)
  {
   show_error("Can't allocate memory");
-  exit(7);
+  exit(MEMORY_ALLOCATION_ERROR);
  }
 
 }
@@ -248,7 +249,7 @@ void decrypt_data(unsigned char *target,const size_t length)
  size_t index=0;
  for (index=0;index<length;++index)
  {
-  target[index]^=0x55;
+  target[index]^=ENCRYPTION_KEY;
  }
 
 }
@@ -256,18 +257,19 @@ void decrypt_data(unsigned char *target,const size_t length)
 tga_head prepare_head()
 {
  tga_head target;
- target.id=0;
+ memset(&target,0,sizeof(tga_head));
  target.x_offset=0;
  target.y_offset=0;
- target.map_start=0;
+ target.id=TGA_ID;
  target.descriptor=TOP_LEFT;
- target.map_length=256;
- target.map_depth=24;
- target.depth=8;
- target.width=320;
- target.height=200;
- target.map_type=1;
- target.image_type=1;
+ target.map_start=MAP_START;
+ target.map_type=MAP_TYPE;
+ target.map_length=MAP_LENGTH;
+ target.map_depth=MAP_DEPTH;
+ target.depth=COLOR_BITS;
+ target.width=IMAGE_WIDTH;
+ target.height=IMAGE_HEIGHT;
+ target.image_type=IMAGE_TYPE;
  return target;
 }
 
