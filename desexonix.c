@@ -3,6 +3,7 @@
 
 void show_intro();
 void show_message(const char *message);
+void show_error(const char *message);
 void show_progress(const unsigned long int start,const unsigned long int stop);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
@@ -40,16 +41,10 @@ int main(int argc, char *argv[])
  return 0;
 }
 
-void show_progress(const unsigned long int start,const unsigned long int stop)
-{
- putchar('\r');
- printf("Amount of the extracted files: %lu from %lu",start,stop);
-}
-
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.3.1");
+ puts("Desexonix. Version 1.3.4");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -62,18 +57,30 @@ void show_message(const char *message)
  puts(message);
 }
 
+void show_error(const char *message)
+{
+ fputc('\n',stderr);
+ fputs(message,stderr);
+}
+
+void show_progress(const unsigned long int start,const unsigned long int stop)
+{
+ putchar('\r');
+ printf("Amount of the extracted files: %lu from %lu",start,stop);
+}
+
 FILE *open_input_file(const char *name)
 {
  FILE *target=NULL;
  if (name==NULL)
  {
-  puts("Can't open the input file");
+  show_error("Can't open the input file");
   exit(1);
  }
  target=fopen(name,"rb");
  if (target==NULL)
  {
-  puts("Can't open the input file");
+  show_error("Can't open the input file");
   exit(1);
  }
  return target;
@@ -84,13 +91,13 @@ FILE *create_output_file(const char *name)
  FILE *target=NULL;
  if (name==NULL)
  {
-  show_message("Can't create the ouput file");
+  show_error("Can't create the ouput file");
   exit(2);
  }
  target=fopen(name,"wb");
  if (target==NULL)
  {
-  show_message("Can't create the ouput file");
+  show_error("Can't create the ouput file");
   exit(2);
  }
  return target;
@@ -101,7 +108,7 @@ unsigned long int get_file_size(FILE *target)
  unsigned long int length=0;
  if (fseek(target,0,SEEK_END)!=0)
  {
-  puts("Can't get the file size!");
+  show_error("Can't get the file size!");
   exit(3);
  }
  length=ftell(target);
@@ -113,7 +120,7 @@ void read_data(void *data,const size_t length,FILE *input)
 {
  if (fread(data,sizeof(char),length,input)<length)
  {
-  show_message("Can't read data!");
+  show_error("Can't read data!");
   exit(4);
  }
 
@@ -123,7 +130,7 @@ void write_data(const void *data,const size_t length,FILE *output)
 {
  if (fwrite(data,sizeof(char),length,output)<length)
  {
-  show_message("Can't write data!");
+  show_error("Can't write data!");
   exit(5);
  }
 
@@ -135,12 +142,12 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length==0)
  {
-  puts("The target file length is invalid");
+  show_error("The target file length is invalid");
   exit(6);
  }
  if ((length%FULL_IMAGE_LENGTH)!=0)
  {
-  puts("The target file length is invalid");
+  show_error("The target file length is invalid");
   exit(6);
  }
  return length/FULL_IMAGE_LENGTH;
@@ -150,7 +157,7 @@ void check_memory(const void *memory)
 {
  if(memory==NULL)
  {
-  show_message("Can't allocate memory");
+  show_error("Can't allocate memory");
   exit(7);
  }
 
