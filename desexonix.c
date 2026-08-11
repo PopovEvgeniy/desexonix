@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.3.7");
+ puts("Desexonix. Version 1.3.8");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -62,6 +62,7 @@ void show_error(const char *message)
 {
  fputc('\n',stderr);
  fputs(message,stderr);
+ fputc('\n',stderr);
 }
 
 void show_progress(const unsigned long int start,const unsigned long int stop)
