@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix. Version 1.3.9");
+ puts("Desexonix 1.4");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
@@ -153,7 +153,7 @@ unsigned long int check_file_size(FILE *target)
 
 void check_memory(const void *memory)
 {
- if(memory==NULL)
+ if (memory==NULL)
  {
   show_error("Can't allocate memory");
   exit(MEMORY_ALLOCATION_ERROR);

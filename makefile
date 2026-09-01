@@ -4,5 +4,5 @@ install:
 	@chmod ugo+rx /bin/desexonix
 	@echo Installation was successfully completed
 uninstall:
-	@rm -f /bin/desexonix
+	@rm /bin/desexonix
 	@echo Uninstallation was successfully completed
