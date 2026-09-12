@@ -28,16 +28,21 @@ void work(const char *target);
 int main(int argc, char *argv[])
 {
  show_intro();
- if (argc<2)
+ switch (argc)
  {
+  case 1:
   show_message("You must give a target file name as the command-line argument!");
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
- }
- else
- {
+  break;
+  case 2:
   show_message("Working...");
   work(argv[1]);
   show_message("The work has been finished");
+  break;
+  default:
+  show_message("You gave too many command-line arguments");
+  exit(COMMAND_LINE_ARGUMENTS_ERROR);
+  break;
  }
  return 0;
 }
@@ -45,7 +50,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.4");
+ puts("Desexonix 1.4.1");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
  puts("Some code was taken from XXX Games tools by the CTPAX-X team");
