@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.5.5");
+ puts("Desexonix 1.5.7");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -275,16 +275,16 @@ bitmap_information prepare_information()
  bitmap_information information;
  memset(&information,0,sizeof(bitmap_information));
  information.length=sizeof(bitmap_information);
- information.width=IMAGE_WIDTH;
- information.height=-1*IMAGE_HEIGHT;
+ information.bitmap_length=IMAGE_LENGTH;
+ information.color_used=IMAGE_COLORS;
+ information.color_important=IMAGE_COLORS;
  information.planes=IMAGE_PLANES;
  information.bits=COLOR_BITS;
+ information.width=IMAGE_WIDTH;
+ information.height=-1*IMAGE_HEIGHT;
  information.compression=0;
- information.bitmap_length=0;
  information.horizontal_resolution=0;
  information.vertical_resolution=0;
- information.color_used=0;
- information.color_important=0;
  return information;
 }
 
