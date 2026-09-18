@@ -1,37 +1,8 @@
 #define IMAGE_LENGTH 64000
-#define PALETTE_LENGTH 768
 #define FULL_IMAGE_LENGTH 64768
 #define IMAGE_WIDTH 320
 #define IMAGE_HEIGHT 200
-#define IMAGE_TYPE 1
+#define PALETTE_LENGTH 768
+#define PALETTE_ITEM_SIZE 3
 #define COLOR_BITS 8
-#define MAP_START 0
-#define MAP_TYPE 1
-#define MAP_DEPTH 24
-#define MAP_LENGTH 256
-#define TGA_ID 0
-#define TOP_LEFT 0x20
 #define ENCRYPTION_KEY 0x55
-
-/*
-This code is based on XXX Games tools source codes by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
-It was relicensed with the permission of the author.
-*/
-
-#pragma pack(push, 1)
-typedef struct
-{
- unsigned char id;
- unsigned char map_type;
- unsigned char image_type;
- unsigned short int map_start;
- unsigned short int map_length;
- unsigned char map_depth;
- unsigned short int x_offset;
- unsigned short int y_offset;
- unsigned short int width;
- unsigned short int height;
- unsigned char depth;
- unsigned char descriptor;
-} tga_head;
-#pragma pack(pop)

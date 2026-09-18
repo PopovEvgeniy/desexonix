@@ -1,5 +1,6 @@
 #include "desexonix.h"
 #include "format.h"
+#include "bmp.h"
 #include "exitcode.h"
 
 void show_intro();
@@ -19,10 +20,12 @@ char *get_name_without_extension(const char *name);
 char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension);
 unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length);
-tga_head prepare_head();
+bitmap_head prepare_head();
+bitmap_information prepare_information();
 void convert_palette(unsigned char *palette);
 unsigned char correct_level(const unsigned char level);
 void correct_colors(unsigned char *palette);
+void generate_modern_palette(unsigned char *target,const unsigned char *source);
 void work(const char *target);
 
 int main(int argc, char *argv[])
@@ -50,11 +53,9 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.4.1");
+ puts("Desexonix 1.5.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
- puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE");
- puts("Some code was taken from XXX Games tools by the CTPAX-X team");
- puts("It was relicensed with the permission of the author");
+ puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
 
 void show_message(const char *message)
@@ -256,23 +257,35 @@ void decrypt_data(unsigned char *target,const size_t length)
 
 }
 
-tga_head prepare_head()
+bitmap_head prepare_head()
 {
- tga_head target;
- memset(&target,0,sizeof(tga_head));
- target.x_offset=0;
- target.y_offset=0;
- target.id=TGA_ID;
- target.descriptor=TOP_LEFT;
- target.map_start=MAP_START;
- target.map_type=MAP_TYPE;
- target.map_length=MAP_LENGTH;
- target.map_depth=MAP_DEPTH;
- target.depth=COLOR_BITS;
- target.width=IMAGE_WIDTH;
- target.height=IMAGE_HEIGHT;
- target.image_type=IMAGE_TYPE;
+ bitmap_head target;
+ memset(&target,0,sizeof(bitmap_head));
+ target.signature[0]='B';
+ target.signature[1]='M';
+ target.reversed[0]=0;
+ target.reversed[1]=0;
+ target.start=MODERN_PALETTE_LENGTH+sizeof(bitmap_head)+sizeof(bitmap_information);
+ target.length=target.start+IMAGE_LENGTH;
  return target;
+}
+
+bitmap_information prepare_information()
+{
+ bitmap_information information;
+ memset(&information,0,sizeof(bitmap_information));
+ information.length=sizeof(bitmap_information);
+ information.width=IMAGE_WIDTH;
+ information.height=-1*IMAGE_HEIGHT;
+ information.planes=IMAGE_PLANES;
+ information.bits=COLOR_BITS;
+ information.compression=0;
+ information.bitmap_length=0;
+ information.horizontal_resolution=0;
+ information.vertical_resolution=0;
+ information.color_used=0;
+ information.color_important=0;
+ return information;
 }
 
 void convert_palette(unsigned char *palette)
@@ -280,7 +293,7 @@ void convert_palette(unsigned char *palette)
  size_t index=0;
  unsigned char red=0;
  unsigned char blue=0;
- for (index=0;index<PALETTE_LENGTH;index+=3)
+ for (index=0;index<PALETTE_LENGTH;index+=PALETTE_ITEM_SIZE)
  {
   red=palette[index];
   blue=palette[index+2];
@@ -307,6 +320,21 @@ void correct_colors(unsigned char *palette)
 
 }
 
+void generate_modern_palette(unsigned char *target,const unsigned char *source)
+{
+ size_t index=0;
+ size_t position=0;
+ for (index=0;index<PALETTE_LENGTH;index+=PALETTE_ITEM_SIZE)
+ {
+  target[position]=source[index];
+  target[position+1]=source[index+1];
+  target[position+2]=source[index+2];
+  target[position+3]=0;
+  position+=MODERN_PALETTE_ITEM_SIZE;
+ }
+
+}
+
 void work(const char *target)
 {
  unsigned long int index=0;
@@ -315,34 +343,41 @@ void work(const char *target)
  char *name=NULL;
  unsigned char *data=NULL;
  unsigned char *palette=NULL;
+ unsigned char *modern=NULL;
  FILE *input=NULL;
  FILE *output=NULL;
- tga_head image_head;
+ bitmap_head head;
+ bitmap_information information;
  data=create_buffer(IMAGE_LENGTH);
  palette=create_buffer(PALETTE_LENGTH);
- image_head=prepare_head();
+ modern=create_buffer(MODERN_PALETTE_LENGTH);
+ head=prepare_head();
+ information=prepare_information();
  input=open_input_file(target);
  name_without_extension=get_name_without_extension(target);
  amount=check_file_size(input);
  for (index=0;index<amount;++index)
  {
   show_progress(index+1,amount);
-  name=get_name(index+1,name_without_extension,".tga");
+  name=get_name(index+1,name_without_extension,".bmp");
   read_data(palette,PALETTE_LENGTH,input);
   read_data(data,IMAGE_LENGTH,input);
   decrypt_data(palette,PALETTE_LENGTH);
   decrypt_data(data,IMAGE_LENGTH);
   convert_palette(palette);
   correct_colors(palette);
+  generate_modern_palette(modern,palette);
   output=create_output_file(name);
-  write_data(&image_head,sizeof(tga_head),output);
-  write_data(palette,PALETTE_LENGTH,output);
+  write_data(&head,sizeof(bitmap_head),output);
+  write_data(&information,sizeof(bitmap_information),output);
+  write_data(modern,MODERN_PALETTE_LENGTH,output);
   write_data(data,IMAGE_LENGTH,output);
   free(name);
   fclose(output);
  }
  free(data);
  free(palette);
+ free(modern);
  free(name_without_extension);
  fclose(input);
 }

@@ -2,12 +2,12 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.4.1
+                             Version 1.5.5
 
 The program description.
 
 This program lets you extract the images from the Sexonix game. It is stored in the Sexonix.pic file.
-The extracted images will be saved in Truevision TGA format (256 colors with an indexed palette).
+The extracted images will be saved in Microsoft Windows Bitmap format (256 colors with an indexed palette).
 This program takes a target file name as the command-line argument.
 
 License.
@@ -26,10 +26,9 @@ Exit codes.
 7: Can't allocate memory.
 8: The command-line arguments is invalid!
 
-The third-party code.
+Thanks.
 
-Some code was taken from XXX Games tools by the CTPAX-X team (http://www.ctpax-x.org/?goto=files&show=21).
-It was relicensed with the permission of the author.
+Big thanks to the CTPAX-X team (http://www.ctpax-x.org) for inspiration.
 
 The source code.
 
@@ -107,3 +106,10 @@ Version history.
 1.3.8: A small bug has been fixed.
 1.3.9: The file processing has improved.
 1.4-1.4.1: The small changes.
+1.4.2: Microsoft Windows Bitmap format support has been added.
+1.4.3: Truevision TGA format support has been removed.
+1.4.4-1.4.6: Microsoft Windows Bitmap format support has improved.
+1.4.7: The memory usage has reduced.
+1.4.8: The small changes.
+1.4.9: A small bug has been fixed.
+1.5-1.5.5: The small changes.
