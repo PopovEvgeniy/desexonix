@@ -19,7 +19,7 @@ size_t get_name_without_extension_length(const char *source);
 char *get_name_without_extension(const char *name);
 char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension);
 unsigned char *create_buffer(const size_t length);
-void decrypt_data(unsigned char *target,const size_t length);
+void decrypt_data(unsigned char *target,const size_t length,const unsigned char key);
 bitmap_head prepare_head(const unsigned int image_length,const unsigned int palette_length);
 bitmap_core prepare_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits);
 void convert_palette(unsigned char *palette,const size_t length,const size_t item);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.7");
+ puts("Desexonix 1.7.1");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -248,12 +248,12 @@ unsigned char *create_buffer(const size_t length)
  return buffer;
 }
 
-void decrypt_data(unsigned char *target,const size_t length)
+void decrypt_data(unsigned char *target,const size_t length,const unsigned char key)
 {
  size_t index=0;
  for (index=0;index<length;++index)
  {
-  target[index]^=ENCRYPTION_KEY;
+  target[index]^=key;
  }
 
 }
@@ -367,8 +367,8 @@ void work(const char *target)
   name=get_name(index+1,name_without_extension,".bmp");
   read_data(palette,PALETTE_LENGTH,input);
   read_data(data,IMAGE_LENGTH,input);
-  decrypt_data(palette,PALETTE_LENGTH);
-  decrypt_data(data,IMAGE_LENGTH);
+  decrypt_data(palette,PALETTE_LENGTH,ENCRYPTION_KEY);
+  decrypt_data(data,IMAGE_LENGTH,ENCRYPTION_KEY);
   convert_palette(palette,PALETTE_LENGTH,PALETTE_ITEM_SIZE);
   correct_colors(palette);
   do_vertical_mirror(data,image,IMAGE_WIDTH,IMAGE_HEIGHT);
