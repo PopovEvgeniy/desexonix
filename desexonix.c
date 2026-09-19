@@ -21,11 +21,12 @@ char *get_name(const unsigned long int index,const char *name_without_extension,
 unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length);
 bitmap_head prepare_head();
-bitmap_information prepare_information();
-void convert_palette(unsigned char *palette);
+bitmap_core prepare_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits);
+void convert_palette(unsigned char *palette,const size_t length,const size_t item);
 unsigned char correct_level(const unsigned char level);
 void correct_colors(unsigned char *palette);
-void generate_modern_palette(unsigned char *target,const unsigned char *source);
+size_t get_position(const size_t x,const size_t y,const size_t width);
+void do_vertical_mirror(const unsigned char *source,unsigned char *target,const size_t width,const size_t height);
 void work(const char *target);
 
 int main(int argc, char *argv[])
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.5.7");
+ puts("Desexonix 1.6.9");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -265,35 +266,29 @@ bitmap_head prepare_head()
  target.signature[1]='M';
  target.reversed[0]=0;
  target.reversed[1]=0;
- target.start=MODERN_PALETTE_LENGTH+sizeof(bitmap_head)+sizeof(bitmap_information);
+ target.start=PALETTE_LENGTH+sizeof(bitmap_head)+sizeof(bitmap_core);
  target.length=target.start+IMAGE_LENGTH;
  return target;
 }
 
-bitmap_information prepare_information()
+bitmap_core prepare_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits)
 {
- bitmap_information information;
- memset(&information,0,sizeof(bitmap_information));
- information.length=sizeof(bitmap_information);
- information.bitmap_length=IMAGE_LENGTH;
- information.color_used=IMAGE_COLORS;
- information.color_important=IMAGE_COLORS;
- information.planes=IMAGE_PLANES;
- information.bits=COLOR_BITS;
- information.width=IMAGE_WIDTH;
- information.height=-1*IMAGE_HEIGHT;
- information.compression=0;
- information.horizontal_resolution=0;
- information.vertical_resolution=0;
- return information;
+ bitmap_core core;
+ memset(&core,0,sizeof(bitmap_core));
+ core.length=sizeof(bitmap_core);
+ core.width=width;
+ core.height=height;
+ core.planes=planes;
+ core.bits=bits;
+ return core;
 }
 
-void convert_palette(unsigned char *palette)
+void convert_palette(unsigned char *palette,const size_t length,const size_t item)
 {
  size_t index=0;
  unsigned char red=0;
  unsigned char blue=0;
- for (index=0;index<PALETTE_LENGTH;index+=PALETTE_ITEM_SIZE)
+ for (index=0;index<length;index+=item)
  {
   red=palette[index];
   blue=palette[index+2];
@@ -320,17 +315,26 @@ void correct_colors(unsigned char *palette)
 
 }
 
-void generate_modern_palette(unsigned char *target,const unsigned char *source)
+size_t get_position(const size_t x,const size_t y,const size_t width)
+{
+ return x+(y*width);
+}
+
+void do_vertical_mirror(const unsigned char *source,unsigned char *target,const size_t width,const size_t height)
 {
  size_t index=0;
  size_t position=0;
- for (index=0;index<PALETTE_LENGTH;index+=PALETTE_ITEM_SIZE)
+ size_t x=0;
+ size_t y=0;
+ for (y=0;y<height;++y)
  {
-  target[position]=source[index];
-  target[position+1]=source[index+1];
-  target[position+2]=source[index+2];
-  target[position+3]=0;
-  position+=MODERN_PALETTE_ITEM_SIZE;
+  for (x=0;x<width;++x)
+  {
+   position=get_position(x,height-y-1,width);
+   target[index]=source[position];
+   ++index;
+  }
+
  }
 
 }
@@ -342,17 +346,17 @@ void work(const char *target)
  char *name_without_extension=NULL;
  char *name=NULL;
  unsigned char *data=NULL;
+ unsigned char *image=NULL;
  unsigned char *palette=NULL;
- unsigned char *modern=NULL;
  FILE *input=NULL;
  FILE *output=NULL;
  bitmap_head head;
- bitmap_information information;
+ bitmap_core core;
  data=create_buffer(IMAGE_LENGTH);
+ image=create_buffer(IMAGE_LENGTH);
  palette=create_buffer(PALETTE_LENGTH);
- modern=create_buffer(MODERN_PALETTE_LENGTH);
  head=prepare_head();
- information=prepare_information();
+ core=prepare_core(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_PLANES,COLOR_BITS);
  input=open_input_file(target);
  name_without_extension=get_name_without_extension(target);
  amount=check_file_size(input);
@@ -364,20 +368,20 @@ void work(const char *target)
   read_data(data,IMAGE_LENGTH,input);
   decrypt_data(palette,PALETTE_LENGTH);
   decrypt_data(data,IMAGE_LENGTH);
-  convert_palette(palette);
+  convert_palette(palette,PALETTE_LENGTH,PALETTE_ITEM_SIZE);
   correct_colors(palette);
-  generate_modern_palette(modern,palette);
+  do_vertical_mirror(data,image,IMAGE_WIDTH,IMAGE_HEIGHT);
   output=create_output_file(name);
   write_data(&head,sizeof(bitmap_head),output);
-  write_data(&information,sizeof(bitmap_information),output);
-  write_data(modern,MODERN_PALETTE_LENGTH,output);
-  write_data(data,IMAGE_LENGTH,output);
+  write_data(&core,sizeof(bitmap_core),output);
+  write_data(palette,PALETTE_LENGTH,output);
+  write_data(image,IMAGE_LENGTH,output);
   free(name);
   fclose(output);
  }
  free(data);
+ free(image);
  free(palette);
- free(modern);
  free(name_without_extension);
  fclose(input);
 }
