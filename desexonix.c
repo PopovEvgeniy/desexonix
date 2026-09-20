@@ -12,7 +12,7 @@ FILE *create_output_file(const char *name);
 unsigned long int get_file_size(FILE *target);
 void read_data(void *data,const size_t length,FILE *input);
 void write_data(const void *data,const size_t length,FILE *output);
-unsigned long int check_file_size(FILE *target);
+unsigned long int check_file_size(FILE *target,const unsigned long int full_image_length);
 void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
 size_t get_name_without_extension_length(const char *source);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.7.5");
+ puts("Desexonix 1.7.6");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -141,7 +141,7 @@ void write_data(const void *data,const size_t length,FILE *output)
 
 }
 
-unsigned long int check_file_size(FILE *target)
+unsigned long int check_file_size(FILE *target,const unsigned long int full_image_length)
 {
  unsigned long int length=0;
  length=get_file_size(target);
@@ -150,12 +150,12 @@ unsigned long int check_file_size(FILE *target)
   show_error("The target file length is 0");
   exit(ZERO_FILE_SIZE_ERROR);
  }
- if ((length%FULL_IMAGE_LENGTH)!=0)
+ if ((length%full_image_length)!=0)
  {
   show_error("The target file length is invalid");
   exit(CHECK_FILE_SIZE_ERROR);
  }
- return length/FULL_IMAGE_LENGTH;
+ return length/full_image_length;
 }
 
 void check_memory(const void *memory)
@@ -360,7 +360,7 @@ void work(const char *target)
  core=prepare_bitmap_core(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_PLANES,COLOR_BITS);
  input=open_input_file(target);
  name_without_extension=get_name_without_extension(target);
- amount=check_file_size(input);
+ amount=check_file_size(input,FULL_IMAGE_LENGTH);
  for (index=0;index<amount;++index)
  {
   show_progress(index+1,amount);

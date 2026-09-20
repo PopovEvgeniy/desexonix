@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.7.5
+                             Version 1.7.6
 
 The program description.
 
@@ -116,4 +116,5 @@ Version history.
 1.5-1.5.5: The small changes.
 1.5.6-1.5.8: Microsoft Windows Bitmap format support has improved.
 1.5.9-1.7.4: The small changes.
-1.7.5:The error handling has improved.
+1.7.5: The error handling has improved.
+1.7.6: The small changes.
