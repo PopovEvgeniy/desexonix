@@ -20,11 +20,11 @@ char *get_name_without_extension(const char *name);
 char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension);
 unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length,const unsigned char key);
-bitmap_head prepare_head(const unsigned int image_length,const unsigned int palette_length);
-bitmap_core prepare_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits);
+bitmap_head prepare_bitmap_head(const unsigned int image_length,const unsigned int palette_length);
+bitmap_core prepare_bitmap_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits);
 void convert_palette(unsigned char *palette,const size_t length,const size_t item);
 unsigned char correct_level(const unsigned char level);
-void correct_colors(unsigned char *palette);
+void correct_colors(unsigned char *palette,const size_t length,const size_t item);
 size_t get_position(const size_t x,const size_t y,const size_t width);
 void do_vertical_mirror(const unsigned char *source,unsigned char *target,const size_t width,const size_t height);
 void work(const char *target);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.7.1");
+ puts("Desexonix 1.7.4");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -258,7 +258,7 @@ void decrypt_data(unsigned char *target,const size_t length,const unsigned char 
 
 }
 
-bitmap_head prepare_head(const unsigned int image_length,const unsigned int palette_length)
+bitmap_head prepare_bitmap_head(const unsigned int image_length,const unsigned int palette_length)
 {
  bitmap_head target;
  memset(&target,0,sizeof(bitmap_head));
@@ -272,7 +272,7 @@ bitmap_head prepare_head(const unsigned int image_length,const unsigned int pale
  return target;
 }
 
-bitmap_core prepare_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits)
+bitmap_core prepare_bitmap_core(const unsigned short int width,const unsigned short int height,const unsigned short int planes,const unsigned short int bits)
 {
  bitmap_core core;
  memset(&core,0,sizeof(bitmap_core));
@@ -304,14 +304,14 @@ unsigned char correct_level(const unsigned char level)
  return (level*4)+(level/16);
 }
 
-void correct_colors(unsigned char *palette)
+void correct_colors(unsigned char *palette,const size_t length,const size_t item)
 {
  size_t index=0;
- unsigned char level=0;
- for (index=0;index<PALETTE_LENGTH;++index)
+ for (index=0;index<length;index+=item)
  {
-  level=correct_level(palette[index]);
-  palette[index]=level;
+  palette[index]=correct_level(palette[index]);
+  palette[index+1]=correct_level(palette[index+1]);
+  palette[index+2]=correct_level(palette[index+2]);
  }
 
 }
@@ -356,8 +356,8 @@ void work(const char *target)
  data=create_buffer(IMAGE_LENGTH);
  image=create_buffer(IMAGE_LENGTH);
  palette=create_buffer(PALETTE_LENGTH);
- head=prepare_head(IMAGE_LENGTH,PALETTE_LENGTH);
- core=prepare_core(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_PLANES,COLOR_BITS);
+ head=prepare_bitmap_head(IMAGE_LENGTH,PALETTE_LENGTH);
+ core=prepare_bitmap_core(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_PLANES,COLOR_BITS);
  input=open_input_file(target);
  name_without_extension=get_name_without_extension(target);
  amount=check_file_size(input);
@@ -370,7 +370,7 @@ void work(const char *target)
   decrypt_data(palette,PALETTE_LENGTH,ENCRYPTION_KEY);
   decrypt_data(data,IMAGE_LENGTH,ENCRYPTION_KEY);
   convert_palette(palette,PALETTE_LENGTH,PALETTE_ITEM_SIZE);
-  correct_colors(palette);
+  correct_colors(palette,PALETTE_LENGTH,PALETTE_ITEM_SIZE);
   do_vertical_mirror(data,image,IMAGE_WIDTH,IMAGE_HEIGHT);
   output=create_output_file(name);
   write_data(&head,sizeof(bitmap_head),output);
