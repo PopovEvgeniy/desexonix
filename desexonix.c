@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.7.4");
+ puts("Desexonix 1.7.5");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -147,8 +147,8 @@ unsigned long int check_file_size(FILE *target)
  length=get_file_size(target);
  if (length==0)
  {
-  show_error("The target file length is invalid");
-  exit(CHECK_FILE_SIZE_ERROR);
+  show_error("The target file length is 0");
+  exit(ZERO_FILE_SIZE_ERROR);
  }
  if ((length%FULL_IMAGE_LENGTH)!=0)
  {
