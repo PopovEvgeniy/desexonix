@@ -9,6 +9,7 @@ void show_error(const char *message);
 void show_progress(const unsigned long int start,const unsigned long int stop);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
+void close_output_file(FILE *output);
 unsigned long int get_file_size(FILE *target);
 void read_data(void *data,const size_t length,FILE *input);
 void write_data(const void *data,const size_t length,FILE *output);
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
   show_message("The work has been finished");
   break;
   default:
-  show_message("You gave too many command-line arguments");
+  show_error("You gave too many command-line arguments");
   exit(COMMAND_LINE_ARGUMENTS_ERROR);
   break;
  }
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.7.6");
+ puts("Desexonix 1.7.9");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -108,6 +109,16 @@ FILE *create_output_file(const char *name)
  return target;
 }
 
+void close_output_file(FILE *output)
+{
+ if (fclose(output)!=0)
+ {
+  show_error("Can't close the output file correctly");
+  exit(CLOSE_FILE_ERROR);
+ }
+
+}
+
 unsigned long int get_file_size(FILE *target)
 {
  unsigned long int length=0;
@@ -117,7 +128,11 @@ unsigned long int get_file_size(FILE *target)
   exit(GET_FILE_SIZE_ERROR);
  }
  length=ftell(target);
- rewind(target);
+ if (fseek(target,0,SEEK_SET)!=0)
+ {
+  show_error("Can't rewind the file!");
+  exit(REWIND_FILE_ERROR);
+ }
  return length;
 }
 
@@ -378,7 +393,7 @@ void work(const char *target)
   write_data(palette,PALETTE_LENGTH,output);
   write_data(image,IMAGE_LENGTH,output);
   free(name);
-  fclose(output);
+  close_output_file(output);
  }
  free(data);
  free(image);

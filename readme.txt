@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.7.6.1
+                             Version 1.7.9
 
 The program description.
 
@@ -19,13 +19,15 @@ Exit codes.
 0: The operation was successfully completed.
 1: Can't open the input file.
 2: Can't create the output file.
-3: Can't get the file size!
-4: Can't read data!
-5: Can't write data!
-6: The target file length is 0.
-7: The target file length is invalid.
-8: Can't allocate memory.
-9: The command-line arguments are invalid!
+3: Can't close the output file correctly.
+4: Can't get the file size!
+5: Can't rewind the file!
+6: Can't read data!
+7: Can't write data!
+8: The target file length is 0.
+9: The target file length is invalid.
+10: Can't allocate memory.
+11: The command-line arguments are invalid!
 
 Thanks.
 
@@ -53,9 +55,9 @@ Version history.
 0.1: The initial version.
 0.2: The target file size checking has been added.
 0.3-0.4.2: The small changes.
-0.4.3: The small bug has been fixed.
+0.4.3: A minor bug has been fixed.
 0.4.4: The small changes.
-0.4.5: The small bug has been fixed.
+0.4.5: A minor bug has been fixed.
 0.4.6-0.5.3: The small changes.
 0.5.3.1-0.5.3.2: The makefile has been updated.
 0.5.4-0.5.9: The small changes.
@@ -74,37 +76,37 @@ Version history.
 0.6.8-0.7.4: The small changes.
 0.7.5: The file processing has been improved.
 0.7.6: The small changes.
-0.7.7: The small bug has been fixed.
+0.7.7: A minor bug has been fixed.
 0.7.8: The small changes.
-0.7.9-0.8: The small bug has been fixed.
+0.7.9-0.8: A minor bug has been fixed.
 0.8.1: The small changes.
-0.8.2-0.8.6: The small bug has been fixed.
+0.8.2-0.8.6: A minor bug has been fixed.
 0.8.7-0.8.8: The small changes.
-0.8.9: The small bug has been fixed.
+0.8.9: A minor bug has been fixed.
 0.9: The small changes.
-0.9.1: The small bug has been fixed.
+0.9.1: A minor bug has been fixed.
 0.9.2: The small changes.
-0.9.3: The small bug has been fixed.
+0.9.3: A minor bug has been fixed.
 0.9.4-0.9.5: The small changes.
-0.9.6: The small bug has been fixed.
+0.9.6: A minor bug has been fixed.
 0.9.7: The small changes.
-0.9.8: The small bug has been fixed.
+0.9.8: A minor bug has been fixed.
 0.9.9: The small changes.
-1.0-1.0.6: The small bug has been fixed.
+1.0-1.0.6: A minor bug has been fixed.
 1.0.7: The small changes.
-1.0.8-1.1: The small bug has been fixed.
+1.0.8-1.1: A minor bug has been fixed.
 1.1.1: The small changes.
-1.1.2-1.1.3: The small bug has been fixed.
+1.1.2-1.1.3: A minor bug has been fixed.
 1.1.4: The small changes.
-1.1.5-1.1.6: The small bug has been fixed.
+1.1.5-1.1.6: A minor bug has been fixed.
 1.1.7: The small changes.
-1.1.8: The small bug has been fixed.
+1.1.8: A minor bug has been fixed.
 1.1.9-1.2.2: The small changes.
-1.2.3: The small bug has been fixed.
+1.2.3: A minor bug has been fixed.
 1.2.4-1.2.6: The small changes.
 1.2.7-1.2.8: The file processing has been improved.
 1.2.9-1.3.7: The small changes.
-1.3.8: The small bug has been fixed.
+1.3.8: A minor bug has been fixed.
 1.3.9: The file processing has been improved.
 1.4-1.4.1: The small changes.
 1.4.2: Microsoft Windows Bitmap format support has been added.
@@ -112,10 +114,12 @@ Version history.
 1.4.4-1.4.6: Microsoft Windows Bitmap format support has been improved.
 1.4.7: The memory usage has been reduced.
 1.4.8: The small changes.
-1.4.9: The small bug has been fixed.
+1.4.9: A minor bug has been fixed.
 1.5-1.5.5: The small changes.
 1.5.6-1.5.8: Microsoft Windows Bitmap format support has been improved.
 1.5.9-1.7.4: The small changes.
 1.7.5: The error handling has been improved.
 1.7.6: The small changes.
 1.7.6.1: The documentation has been updated.
+1.7.7-1.7.8: The file processing has been improved.
+1.7.9: The small changes.
