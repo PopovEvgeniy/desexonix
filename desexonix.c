@@ -6,6 +6,7 @@
 void show_intro();
 void show_message(const char *message);
 void show_error(const char *message);
+void check_name(const char *name,const char *message,const int code);
 void show_progress(const unsigned long int start,const unsigned long int stop);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.7.9");
+ puts("Desexonix 1.8");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -73,6 +74,21 @@ void show_error(const char *message)
  fputc('\n',stderr);
 }
 
+void check_name(const char *name,const char *message,const int code)
+{
+ size_t length=0;
+ if (name!=NULL)
+ {
+  length=strlen(name);
+ }
+ if (length==0)
+ {
+  show_error(message);
+  exit(code);
+ }
+
+}
+
 void show_progress(const unsigned long int start,const unsigned long int stop)
 {
  putchar('\r');
@@ -82,10 +98,8 @@ void show_progress(const unsigned long int start,const unsigned long int stop)
 FILE *open_input_file(const char *name)
 {
  FILE *target=NULL;
- if (name!=NULL)
- {
-  target=fopen(name,"rb");
- }
+ check_name(name,"The target file name is empty",EMPTY_TARGET_NAME_ERROR);
+ target=fopen(name,"rb");
  if (target==NULL)
  {
   show_error("Can't open the input file");

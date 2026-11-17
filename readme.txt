@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.7.9
+                             Version 1.8
 
 The program description.
 
@@ -17,17 +17,18 @@ This program is distributed under the GNU GENERAL PUBLIC LICENSE.
 Exit codes.
 
 0: The operation was successfully completed.
-1: Can't open the input file.
-2: Can't create the output file.
-3: Can't close the output file correctly.
-4: Can't get the file size!
-5: Can't rewind the file!
-6: Can't read data!
-7: Can't write data!
-8: The target file length is 0.
-9: The target file length is invalid.
-10: Can't allocate memory.
-11: The command-line arguments are invalid!
+1: The target file name is empty.
+2: Can't open the input file.
+3: Can't create the output file.
+4: Can't close the output file correctly.
+5: Can't get the file size!
+6: Can't rewind the file!
+7: Can't read data!
+8: Can't write data!
+9: The target file length is 0.
+10: The target file length is invalid.
+11: Can't allocate memory.
+12: The command-line arguments are invalid!
 
 Thanks.
 
@@ -123,3 +124,4 @@ Version history.
 1.7.6.1: The documentation has been updated.
 1.7.7-1.7.8: The file processing has been improved.
 1.7.9: The small changes.
+1.8: The error handling has been improved.
