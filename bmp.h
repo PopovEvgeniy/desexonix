@@ -5,7 +5,7 @@ typedef struct
 {
  char signature[2];
  unsigned int length;
- unsigned short int reversed[2];
+ unsigned short int reserved[2];
  unsigned int start;
 } bitmap_head;
 #pragma pack(pop)

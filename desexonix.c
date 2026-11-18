@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.8.1");
+ puts("Desexonix 1.8.2");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -136,6 +136,12 @@ void close_output_file(FILE *output)
 unsigned long int get_file_size(FILE *target)
 {
  long int length=0;
+ if (fseek(target,2147483647L,SEEK_SET)==0)
+ {
+  fseek(target,0,SEEK_SET);
+  show_error("The file size is too big!");
+  exit(BIG_FILE_SIZE_ERROR);
+ }
  if (fseek(target,0,SEEK_END)!=0)
  {
   show_error("Can't get the file size!");
@@ -298,8 +304,8 @@ bitmap_head prepare_bitmap_head(const unsigned int image_length,const unsigned i
  memset(&target,0,sizeof(bitmap_head));
  target.signature[0]='B';
  target.signature[1]='M';
- target.reversed[0]=0;
- target.reversed[1]=0;
+ target.reserved[0]=0;
+ target.reserved[1]=0;
  target.start=sizeof(bitmap_head)+sizeof(bitmap_core);
  target.start+=palette_length;
  target.length=target.start+image_length;
