@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.8.3
+                             Version 1.8.5
 
 The program description.
 
@@ -10,9 +10,17 @@ This program lets you extract the images from the Sexonix game. It is stored in 
 The extracted images will be saved in Microsoft Windows Bitmap format (256 colors with an indexed palette).
 This program takes a target file name as the command-line argument.
 
+The supported operating system list.
+
+This program can be built under one of the following operating systems:
+
+Unix-like system.
+Haiku.
+Microsoft Windows 95 or higher.
+
 License.
 
-This program is distributed under the GNU GENERAL PUBLIC LICENSE.
+This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms.
 
 Exit codes.
 
@@ -21,15 +29,14 @@ Exit codes.
 2: Can't open the input file.
 3: Can't create the output file.
 4: Can't close the output file correctly.
-5: The file size is too big!
-6: Can't get the file size!
-7: Can't rewind the file!
-8: Can't read data!
-9: Can't write data!
-10: The target file length is 0.
-11: The target file length is invalid.
-12: Can't allocate memory.
-13: The command-line arguments are invalid!
+5: Can't get the file size!
+6: Can't rewind the file!
+7: Can't read data!
+8: Can't write data!
+9: The target file length is 0.
+10: The target file length is invalid.
+11: Can't allocate memory.
+12: The command-line arguments are invalid!
 
 Thanks.
 
@@ -128,4 +135,4 @@ Version history.
 1.8: The error handling has been improved.
 1.8.1: A minor bug has been fixed.
 1.8.2: The file processing has been improved.
-1.8.3: A minor bug has been fixed.
+1.8.3-1.8.5: A minor bug has been fixed.

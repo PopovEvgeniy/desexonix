@@ -8,6 +8,11 @@
 #define DIRECTORY_SEPARATOR '/'
 #endif
 
+#ifdef __HAIKU__
+#define B_USE_POSITIVE_POSIX_ERRORS
+#endif
+
+#include <errno.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
