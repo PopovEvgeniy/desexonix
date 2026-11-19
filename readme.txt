@@ -2,7 +2,7 @@
 
                  Sexonix image extractor by Popov Evgeniy Alekseyevich
 
-                             Version 1.8.5
+                             Version 1.8.6
 
 The program description.
 
@@ -16,7 +16,7 @@ This program can be built under one of the following operating systems:
 
 Unix-like system.
 Haiku.
-Microsoft Windows 95 or higher.
+Microsoft Windows 2000 or higher.
 
 License.
 
@@ -136,3 +136,4 @@ Version history.
 1.8.1: A minor bug has been fixed.
 1.8.2: The file processing has been improved.
 1.8.3-1.8.5: A minor bug has been fixed.
+1.8.6: The file processing has been improved.

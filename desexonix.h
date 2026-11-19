@@ -4,15 +4,14 @@
 
 #ifdef _WIN32
 #define DIRECTORY_SEPARATOR '\\'
+#define file_seek _fseeki64
+#define file_tell _ftelli64
 #else
 #define DIRECTORY_SEPARATOR '/'
+#define file_seek fseeko
+#define file_tell ftello
 #endif
 
-#ifdef __HAIKU__
-#define B_USE_POSITIVE_POSIX_ERRORS
-#endif
-
-#include <errno.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>

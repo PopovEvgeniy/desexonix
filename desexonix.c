@@ -7,19 +7,19 @@ void show_intro();
 void show_message(const char *message);
 void show_error(const char *message);
 void check_name(const char *name,const char *message,const int code);
-void show_progress(const unsigned long int start,const unsigned long int stop);
+void show_progress(const long long int start,const long long int stop);
 FILE *open_input_file(const char *name);
 FILE *create_output_file(const char *name);
 void close_output_file(FILE *output);
-unsigned long int get_file_size(FILE *target);
+long long int get_file_size(FILE *target);
 void read_data(void *data,const size_t length,FILE *input);
 void write_data(const void *data,const size_t length,FILE *output);
-unsigned long int check_file_size(FILE *target,const unsigned long int full_image_length);
+long long int check_file_size(FILE *target,const long long int full_image_length);
 void check_memory(const void *memory);
 char *get_string_memory(const size_t length);
 size_t get_name_without_extension_length(const char *source);
 char *get_name_without_extension(const char *name);
-char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension);
+char *get_name(const long long int index,const char *name_without_extension,const char *extension);
 unsigned char *create_buffer(const size_t length);
 void decrypt_data(unsigned char *target,const size_t length,const unsigned char key);
 bitmap_head prepare_bitmap_head(const unsigned int image_length,const unsigned int palette_length);
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 void show_intro()
 {
  putchar('\n');
- puts("Desexonix 1.8.5");
+ puts("Desexonix 1.8.6");
  puts("Sexonix image extractor by Popov Evgeniy Alekseyevich,2020-2026 years");
  puts("This program is distributed under the GNU GENERAL PUBLIC LICENSE (version 2 or later) terms");
 }
@@ -89,10 +89,11 @@ void check_name(const char *name,const char *message,const int code)
 
 }
 
-void show_progress(const unsigned long int start,const unsigned long int stop)
+void show_progress(const long long int start,const long long int stop)
 {
  putchar('\r');
- printf("Amount of the extracted files: %lu from %lu",start,stop);
+ printf("Amount of the extracted files: %lld from %lld",start,stop);
+ fflush(stdout);
 }
 
 FILE *open_input_file(const char *name)
@@ -133,22 +134,21 @@ void close_output_file(FILE *output)
 
 }
 
-unsigned long int get_file_size(FILE *target)
+long long int get_file_size(FILE *target)
 {
- long int length=0;
- if (fseek(target,0,SEEK_END)!=0)
+ long long int length=-1;
+ if (file_seek(target,0,SEEK_END)!=0)
  {
   show_error("Can't get the file size!");
   exit(GET_FILE_SIZE_ERROR);
  }
- errno=0;
- length=ftell(target);
- if ((length<0)||(errno!=0))
+ length=file_tell(target);
+ if (length==-1)
  {
   show_error("Can't get the file size!");
   exit(GET_FILE_SIZE_ERROR);
  }
- if (fseek(target,0,SEEK_SET)!=0)
+ if (file_seek(target,0,SEEK_SET)!=0)
  {
   show_error("Can't rewind the file!");
   exit(REWIND_FILE_ERROR);
@@ -176,9 +176,9 @@ void write_data(const void *data,const size_t length,FILE *output)
 
 }
 
-unsigned long int check_file_size(FILE *target,const unsigned long int full_image_length)
+long long int check_file_size(FILE *target,const long long int full_image_length)
 {
- unsigned long int length=0;
+ long long int length=0;
  length=get_file_size(target);
  if (length==0)
  {
@@ -258,7 +258,7 @@ char *get_name_without_extension(const char *name)
  return result;
 }
 
-char *get_name(const unsigned long int index,const char *name_without_extension,const char *extension)
+char *get_name(const long long int index,const char *name_without_extension,const char *extension)
 {
  char *name=NULL;
  size_t length=0;
@@ -266,9 +266,9 @@ char *get_name(const unsigned long int index,const char *name_without_extension,
  {
   if (extension!=NULL)
   {
-   length=strlen(name_without_extension)+strlen(extension)+12;
+   length=strlen(name_without_extension)+strlen(extension)+19;
    name=get_string_memory(length);
-   sprintf(name,"%s%lu%s",name_without_extension,index,extension);
+   sprintf(name,"%s%lld%s",name_without_extension,index,extension);
   }
 
  }
@@ -377,8 +377,8 @@ void do_vertical_mirror(const unsigned char *source,unsigned char *target,const 
 
 void work(const char *target)
 {
- unsigned long int index=0;
- unsigned long int amount=0;
+ long long int index=0;
+ long long int amount=0;
  char *name_without_extension=NULL;
  char *name=NULL;
  unsigned char *data=NULL;
