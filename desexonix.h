@@ -2,6 +2,10 @@
   #pragma warning(disable : 4996)
 #endif
 
+#ifndef _WIN32
+#define _FILE_OFFSET_BITS 64
+#endif
+
 #ifdef _WIN32
 #define DIRECTORY_SEPARATOR '\\'
 #define file_seek _fseeki64
